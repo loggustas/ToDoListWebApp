@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,8 @@ namespace ToDoList_netaspmvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,18 +43,36 @@ namespace ToDoList_netaspmvc
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            /*
+            FileServerOptions fileServerOptions = new FileServerOptions();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("food.html");
+            app.UseFileServer();
+            */
+
             app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
+
 
             app.UseRouting();
 
             app.UseAuthorization();
 
+            /*
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            */
+
+            
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("hi 3   ");
+            });
+            
         }
     }
 }
