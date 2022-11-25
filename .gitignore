@@ -5,3 +5,9 @@ _ReSharper.*
 bin
 obj
 packages
+
+ToDoList-netaspmvc/.vs
+ToDoList-netaspmvc/obj
+ToDoList-netaspmvc/bin
+ToDoList-netaspmvc/ToDoList-netaspmvc.csproj.user
+
