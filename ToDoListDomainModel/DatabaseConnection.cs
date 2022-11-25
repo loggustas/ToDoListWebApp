@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Xml.Linq;
 using Microsoft.Extensions.Configuration;
+using ToDoList_netaspmvc.Models;
 
-
-namespace ToDoListDomainModel
+namespace ToDoList_netaspmvc
 {
     public class DatabaseConnection
     {
