@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ToDoList_netaspmvc.Infrastructure;
+using ToDoList_netaspmvc.Models;
+using ToDoList_netaspmvc.Models.Repo;
 
 namespace ToDoList_netaspmvc
 {
@@ -25,8 +22,14 @@ namespace ToDoList_netaspmvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllersWithViews();
-            services.AddMvc();
+            services.AddControllersWithViews();
+            services.AddScoped<IToDoListRepository, ToDoListRepository>();
+
+            services.AddDbContext<ToDoContext>(options => options.UseSqlServer
+            (Configuration.GetConnectionString("ToDoContext")));  //sitas pridetas is g
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,35 +45,20 @@ namespace ToDoList_netaspmvc
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseStatusCodePages();
             app.UseHttpsRedirection();
-            /*
-            FileServerOptions fileServerOptions = new FileServerOptions();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("food.html");
-            app.UseFileServer();
-            */
-
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
-
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
 
-            /*
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
-            */
+            {                
+                endpoints.MapControllerRoute("default", "{controller}/{action}/{id?}",
+                    new { Controller = "Home", action = "Index" });
 
-            
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("hi 3   ");
+                endpoints.MapDefaultControllerRoute();                
             });
             
         }
