@@ -1,0 +1,19 @@
+﻿@model Record
+
+<div class="card card-outline-primary m-1 p-1">
+    <div class="bg-faded p-1">
+        <h4>
+            @Model.Title
+            <span class="badge badge-pill badge-primary" style="float:right">@Model.Status</span>
+        </h4>
+    </div>
+
+    <div>
+        <span class="card-text p-1">
+            Due: @Model.DueDate
+            <a asp-controller="List" asp-action="Summary" asp-route-id="@Model.Id" class="btn btn-success btn-sm pull-right" style="float:right">
+                Full View
+            </a>
+        </span>
+    </div>
+</div>
