@@ -50,12 +50,26 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
         }
 
-        public async Task<bool> Update(ToDoList toDoList)
+        public List<Record> GetAllRecords(int toDoListId)
         {
-            toDoContext.ToDoList.Update(toDoList);
-            int numOfUpdates = await toDoContext.SaveChangesAsync();
+            return toDoContext.Record.Where(x => x.toDoListID == toDoListId).ToList();
+        }
 
-            if(numOfUpdates == 1)
+        public async Task<bool> DeleteList(int toDoListId)
+        {
+            List<Record> recordsToRemove = this.GetAllRecords(toDoListId);
+            for (int i = 0; i < recordsToRemove.Count; i++)
+            {
+                toDoContext.Record.Remove(recordsToRemove[i]);
+            }
+
+            ToDoList listToDelete = toDoContext.ToDoList.FirstOrDefault(x => x.Id == toDoListId);
+            int deletedEntryCount = recordsToRemove.Count + 1;
+
+            toDoContext.ToDoList.Remove(listToDelete);
+            int actuallyDeletedEntryCount = await toDoContext.SaveChangesAsync();
+
+            if (deletedEntryCount == actuallyDeletedEntryCount)
             {
                 return true;
             }
@@ -65,14 +79,49 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
         }
 
-        public Task<bool> Update(Record record)
+        public async Task<bool> DeleteRecord(int id)
+        {
+            toDoContext.Record.Remove(this.GetRecord(id));
+            int recordsRemoved = await toDoContext.SaveChangesAsync();
+
+            if (recordsRemoved == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Record GetRecord(int id)
+        {
+            return this.toDoContext.Record.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<bool> UpdateList(ToDoList toDoList)
+        {
+            toDoContext.ToDoList.Update(toDoList);
+            int numOfUpdates = await toDoContext.SaveChangesAsync();
+
+            if (numOfUpdates == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Task<bool> UpdateRecord(Record record)
         {
             throw new NotImplementedException();
         }
 
-        public List<Record> GetAllRecords(int id)
+        public ToDoList GetList(int id)
         {
-            return toDoContext.Record.Where(x => x.toDoListID == id).ToList();
+            return toDoContext.ToDoList.FirstOrDefault(x => x.Id == id);
         }
     }
 }
