@@ -88,7 +88,7 @@ namespace ToDoList_netaspmvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool result = await _toDoListRepository.Update(list);
+                bool result = await _toDoListRepository.UpdateList(list);
 
                 if (result)
                 {
