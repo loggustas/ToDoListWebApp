@@ -7,6 +7,8 @@ obj
 packages
 
 ToDoList-netaspmvc/.vs
+ToDoList-netaspmvc/.vs/ToDoList-netaspmvc/v17
+ToDoList-netaspmvc/bin/Debug/netcoreapp3.1
 ToDoList-netaspmvc/obj
 ToDoList-netaspmvc/bin
 ToDoList-netaspmvc/ToDoList-netaspmvc.csproj.user
