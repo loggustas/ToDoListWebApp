@@ -105,6 +105,25 @@ namespace ToDoList_netaspmvc.Controllers
             return View(list);
         }
 
+        public async Task<ActionResult> DeleteList(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = await _toDoListRepository.DeleteList(id);
+
+                if (result)
+                {
+                    TempData["Success"] = "The list has been deleted!";
+                }
+                else
+                {
+                    TempData["Error"] = "Something went wrong while deleting the list.";
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
@@ -113,7 +132,6 @@ namespace ToDoList_netaspmvc.Controllers
         public IActionResult Details()
         {
             return View();
-
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
