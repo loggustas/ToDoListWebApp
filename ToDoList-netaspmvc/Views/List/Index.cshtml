@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ToDoList_netaspmvc.Models.Record>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>@ViewData["ListName"]</h1>
+
+<p>
+    <a asp-controller="List" asp-action="Create">Add new record to a list</a>
+</p>
+
+@foreach (var record in Model)
+{
+    <partial name="RecordSummary" model="record" />
+}
+
