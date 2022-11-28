@@ -16,5 +16,9 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public Task<bool> AddRecord(Record record);
         public Task<bool> Update(ToDoList toDoList);
+
+        public Task<bool> Update(Record record);
+
+        public List<Record> GetAllRecords(int id);
     }
 }

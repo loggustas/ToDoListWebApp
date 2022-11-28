@@ -64,5 +64,15 @@ namespace ToDoList_netaspmvc.Models.Repo
                 return false;
             }
         }
+
+        public Task<bool> Update(Record record)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Record> GetAllRecords(int id)
+        {
+            return toDoContext.Record.Where(x => x.toDoListID == id).ToList();
+        }
     }
 }
