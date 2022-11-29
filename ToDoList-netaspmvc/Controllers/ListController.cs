@@ -21,16 +21,55 @@ namespace ToDoList_netaspmvc.Controllers
 		{
 			List<Record> records = _repository.GetAllRecords(id);
 
-			/*
-			if(records == null || records.Count == 0)
-			{
-				throw new ArgumentException("There were no records found in a list.");
-			}
-			*/
+            ViewData["ListID"] = id;
 
-			ViewData["ListName"] = _repository.GetList(id).Name;
-			return View(records);
+            string? name = _repository.GetList(id)?.Name;
+            if(name == null)
+            {
+                ViewData["ListName"] = "There is no such list with this id.";
+                ViewData["ListExists"] = false;
+            }
+            else
+            {
+                ViewData["ListName"] = name;
+                ViewData["ListExists"] = true;
+            }
+
+            return View(records);
 		}
+
+        public IActionResult Create(int id)
+        {
+            return View();
+        }
+
+        //Post Home/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Record record, int id)
+        {
+            record.toDoListID = record.Id;
+            record.Id = 0;
+            int toDoListID = record.toDoListID;
+
+            if (ModelState.IsValid)
+            {
+                bool result = await _repository.AddRecord(record);
+
+                if (result)
+                {
+                    TempData["Success"] = "The record has been added!";
+                }
+                else
+                {
+                    TempData["Error"] = "Something went wrong while adding the record.";
+                }
+
+                return RedirectToAction("Index", "List", new { id = toDoListID});
+            }
+
+            return View(record);
+        }
 
         public async Task<ActionResult> DeleteRecord(int id)
 		{
