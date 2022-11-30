@@ -114,9 +114,19 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
         }
 
-        public Task<bool> UpdateRecord(Record record)
+        public async Task<bool> UpdateRecord(Record record)
         {
-            throw new NotImplementedException();
+            toDoContext.Record.Update(record);
+            int numOfUpdates = await toDoContext.SaveChangesAsync();
+
+            if (numOfUpdates == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public ToDoList GetList(int id)
