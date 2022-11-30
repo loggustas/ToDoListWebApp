@@ -41,6 +41,8 @@ namespace ToDoList_netaspmvc.Controllers
 
         public IActionResult Create(int id)
         {
+            ViewData["ListIDCreate"] = id;
+
             return View();
         }
 
@@ -49,10 +51,6 @@ namespace ToDoList_netaspmvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Record record)
         {
-            record.toDoListID = record.Id;
-            record.Id = 0;
-            int toDoListID = record.toDoListID;
-
             if (ModelState.IsValid)
             {
                 bool result = await _repository.AddRecord(record);
@@ -66,7 +64,7 @@ namespace ToDoList_netaspmvc.Controllers
                     TempData["Error"] = "Something went wrong while adding the record.";
                 }
 
-                return RedirectToAction("Index", "List", new { id = toDoListID});
+                return RedirectToAction("Index", "List", new { id = record.toDoListID });
             }
 
             return View(record);
