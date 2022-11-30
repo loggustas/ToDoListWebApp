@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace ToDoList_netaspmvc.Controllers
 		{
 			List<Record> records = _repository.GetAllRecords(id);
 
-            ViewData["ListID"] = id;
+            ViewData["ListIDView"] = id;
 
             string? name = _repository.GetList(id)?.Name;
             if(name == null)
@@ -46,7 +47,7 @@ namespace ToDoList_netaspmvc.Controllers
         //Post Home/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Record record, int id)
+        public async Task<ActionResult> Create(Record record)
         {
             record.toDoListID = record.Id;
             record.Id = 0;
@@ -66,6 +67,42 @@ namespace ToDoList_netaspmvc.Controllers
                 }
 
                 return RedirectToAction("Index", "List", new { id = toDoListID});
+            }
+
+            return View(record);
+        }
+
+        public async Task<ActionResult> EditRecord(int id)
+        {
+            Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return View(record);
+        }
+
+        //Post home/edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditRecord(Record record)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = await _repository.UpdateRecord(record);
+
+                if (result)
+                {
+                    TempData["Success"] = "The record has been updated!";
+                }
+                else
+                {
+                    TempData["Error"] = "Something went wrong while updating the record list.";
+                }
+
+                return RedirectToAction("Index", "List", new { id = record.toDoListID});
             }
 
             return View(record);
