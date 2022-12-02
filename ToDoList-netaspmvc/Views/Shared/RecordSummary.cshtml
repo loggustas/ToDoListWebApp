@@ -4,7 +4,20 @@
     <div class="bg-faded p-1">
         <h4>
             @Model.Title
-            <span class="badge badge-pill badge-primary" style="float:right">@Model.Status</span>
+            @{
+                if (Model.Status.Trim().Equals("Not started"))
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
+                }
+                else if (Model.Status.Trim().Equals("Ongoing"))
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
+                }
+                else
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
+                }
+            }
         </h4>
     </div>
 
