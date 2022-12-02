@@ -12,13 +12,13 @@
     @{
         if ((Model.Count() == 0 || Model == null) && listExists)
         {
-                <h2>There are currently no records in a list. You can add them by clicking the button below</h2>
+                <h2>There are currently no records in a list. You can add them by clicking the button below.</h2>
         }
     }
     @{
         if (listExists)
         {
-            <a asp-controller="List" asp-action="Create" asp-route-id="@id">Add new record to a list</a>
+            <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id">Add new record to a list</a>
         }
     }
 </p>
