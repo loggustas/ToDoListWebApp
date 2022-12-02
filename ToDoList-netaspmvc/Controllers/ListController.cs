@@ -95,6 +95,8 @@ namespace ToDoList_netaspmvc.Controllers
                 return NotFound();
             }
 
+            ViewData["ListName"] = record.toDoList;
+
             return View(record);
         }
 
