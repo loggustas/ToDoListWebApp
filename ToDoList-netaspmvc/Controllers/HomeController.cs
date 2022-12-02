@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using ToDoList_netaspmvc.Infrastructure;
 using ToDoList_netaspmvc.Models;
 using ToDoList_netaspmvc.Models.Repo;
-using ToDoList_netaspmvc.Models.ViewModels;
 
 namespace ToDoList_netaspmvc.Controllers
 {
@@ -25,16 +24,8 @@ namespace ToDoList_netaspmvc.Controllers
 
         public async Task<ActionResult> Index()
         {
-            //List<ToDoListViewModel> listsViewModel = new List<ToDoListViewModel>();
             List<ToDoList> lists = await _toDoListRepository.toDoLists.OrderBy(x => x.Id).ToListAsync();
-            /*for (int i = 0; i < lists.Count; i++)
-            {
-                listsViewModel.Add(
-                    new ToDoListViewModel(lists[i].Id, lists[i].Name, lists[i].Description,
-                    _toDoListRepository.records.Where(x => x.toDoList == lists[i].Name).OrderBy(x => x.Number).ToList()));
-            }
-            */
-                
+
             return View(lists);  
         }
 

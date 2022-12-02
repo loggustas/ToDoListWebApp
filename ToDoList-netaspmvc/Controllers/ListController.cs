@@ -19,11 +19,20 @@ namespace ToDoList_netaspmvc.Controllers
 			_repository = repository;
 		}
 
-		public IActionResult Index(int id)
+		public IActionResult Index(int id, bool hideCompleted)
 		{
-			List<Record> records = _repository.GetAllRecords(id);
-
             ViewData["ListIDView"] = id;
+            ViewData["hideCompleted"] = hideCompleted;
+
+            List<Record> records = _repository.GetAllRecords(id);
+
+            bool isListEmpty = records.Count() == 0;
+            ViewData["isListEmpty"] = isListEmpty;
+
+            if (hideCompleted)
+            {
+                records = records.Where(x => !x.Status.Equals("Completed")).ToList();
+            }
 
             string? name = _repository.GetList(id)?.Name;
             if(name == null)

@@ -1,8 +1,5 @@
 ﻿@model ToDoList_netaspmvc.Models.Record
 
-@{
-}
-
 <h1>Edit</h1>
 
 <h4>a Record</h4>
@@ -45,6 +42,6 @@
 </div>
 
 <div>
-    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID">Back to List</a>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@false">Back to List</a>
 </div>
 

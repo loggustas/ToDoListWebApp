@@ -3,22 +3,40 @@
 @{
     int id = (int)ViewData["ListIDView"];
     bool listExists = (bool)ViewData["ListExists"];
+    bool hideCompleted = (bool)ViewData["hideCompleted"];
+    bool isListEmpty = (bool)ViewData["isListEmpty"];
 }
 
 <h1>@ViewData["ListName"]</h1>
 
 <p>
     @{
-        if ((Model.Count() == 0 || Model == null) && listExists)
+        if ((isListEmpty || Model == null) && listExists)
         {
-                <h2>There are currently no records in a list. You can add them by clicking one of the buttons below.</h2>
+            <h2>There are currently no records in a list. You can add them by clicking one of the buttons below.</h2>
         }
+        /*
+        else if (Model.Count() == 0 && listExists)
+        {
+        <h2>There are current</h2>
+        }
+        */
     }
     @{
         if (listExists)
         {
             <span>
             <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id">Add new record to a list</a>
+            @{
+                if (!isListEmpty && !hideCompleted)
+                {
+                    <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true">Hide completed</a>
+                }
+                else if (!isListEmpty && hideCompleted)
+                {
+                    <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false">Show completed</a>
+                }
+            }
             <a class="buttonEdit" asp-controller="Home" asp-action="Index">Back</a>
             </span>
         }

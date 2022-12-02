@@ -16,7 +16,7 @@
             <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="buttonEdit" style="float:right">
                 Edit
             </a>
-            <a asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" class="buttonDelete" style="float:right">
+            <a asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" asp-route-hideCompleted="@false" class="buttonDelete" style="float:right">
                 Delete
             </a>
         </span>
