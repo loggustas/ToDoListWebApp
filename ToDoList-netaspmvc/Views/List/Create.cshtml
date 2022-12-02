@@ -14,6 +14,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="toDoListID" value="@toDoListID" />
+            <input type="hidden" asp-for="toDoList" value="@ViewData["ListName"]" />
             <input type="hidden" asp-for="Id" value="0" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -47,6 +48,6 @@
 </div>
 
 <div>
-    <a class="buttonEdit" asp-action="Index">Back to List</a>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@toDoListID">Back to List</a>
 </div>
 
