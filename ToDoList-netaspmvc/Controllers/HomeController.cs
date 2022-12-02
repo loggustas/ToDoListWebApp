@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoList_netaspmvc.Infrastructure;
 using ToDoList_netaspmvc.Models;
 using ToDoList_netaspmvc.Models.Repo;
 
@@ -42,15 +39,54 @@ namespace ToDoList_netaspmvc.Controllers
             Console.WriteLine(list.Id + "   " + list.Name + "    " + list.Description);
             if (ModelState.IsValid)
             {
-                bool result = await _toDoListRepository.AddToDoList(list);
+                int? result = await _toDoListRepository.AddToDoList(list);
 
-                if (result)
+                if (result != null)
                 {
                     TempData["Success"] = "The list has been added!";
                 }
                 else
                 {
                     TempData["Error"] = "Something went wrong while Editting list.";
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(list);
+        }
+
+        public async Task<ActionResult> Copy(int id)
+        {
+            ToDoList listToCopy = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+            if(listToCopy == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["ListToCopyID"] = id;
+
+            return View(listToCopy);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Copy(ToDoList list)
+        {
+            if (ModelState.IsValid)
+            {
+                ToDoList toDoListCopy = new ToDoList { Id = 0, Name = list.Name, Description = list.Description };
+
+                int? result = await _toDoListRepository.AddToDoList(toDoListCopy);
+
+                if (result != null)
+                {
+                    TempData["Success"] = "The list has been copied!";
+                    _toDoListRepository.CopyList(list.Id, result.Value);
+                }
+                else
+                {
+                    TempData["Error"] = "Something went wrong while Copying list.";
                 }
 
                 return RedirectToAction("Index");
@@ -67,8 +103,6 @@ namespace ToDoList_netaspmvc.Controllers
             {
                 return NotFound();
             }
-
-            //List<Record> records = await _toDoListRepository.records.Where(x => x.Id == id).OrderBy(x => x.Number).ToListAsync();
 
             return View(list);
         }
@@ -116,15 +150,6 @@ namespace ToDoList_netaspmvc.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Details()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

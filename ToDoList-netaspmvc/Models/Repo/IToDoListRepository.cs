@@ -12,7 +12,7 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public IQueryable<Record> records { get; }
 
-        public Task<bool> AddToDoList(ToDoList toDoList);
+        public Task<int?> AddToDoList(ToDoList toDoList);
 
         public Task<bool> AddRecord(Record record);
         public Task<bool> UpdateList(ToDoList toDoList);
@@ -28,5 +28,9 @@ namespace ToDoList_netaspmvc.Models.Repo
         public Task<bool> DeleteList(int toDoListId);
 
         public Task<bool> DeleteRecord(int id);
+
+        public void CopyList(int idCopyFrom, int idCopyTo);
+
+        public void CopyRecord(Record record, int ListIdCopyTo);
     }
 }

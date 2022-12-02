@@ -1,0 +1,36 @@
+﻿@model ToDoList_netaspmvc.Models.ToDoList
+
+@{
+    int listToCopyId = (int)ViewData["ListToCopyID"];
+}
+
+<h1>Copy</h1>
+
+<h4>a List</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Copy">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@listToCopyId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Copy" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="buttonEdit" asp-action="Index">Back to Home</a>
+</div>
+

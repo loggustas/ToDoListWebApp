@@ -35,19 +35,12 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
         }
 
-        public async Task<bool> AddToDoList(ToDoList toDoList)
+        public async Task<int?> AddToDoList(ToDoList toDoList)
         {
             toDoContext.ToDoList.Add(toDoList);
-            int numOfLists = await toDoContext.SaveChangesAsync();
+            await toDoContext.SaveChangesAsync();
 
-            if(numOfLists == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return toDoContext.ToDoList.FirstOrDefault(x => x.Name.Equals(toDoList.Name) && x.Description.Equals(toDoList.Description))?.Id;
         }
 
         public List<Record> GetAllRecords(int toDoListId)
@@ -132,6 +125,33 @@ namespace ToDoList_netaspmvc.Models.Repo
         public ToDoList GetList(int id)
         {
             return toDoContext.ToDoList.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void CopyList(int idCopyFrom, int idCopyTo)
+        {
+            List<Record> recordsToCopy = this.GetAllRecords(idCopyFrom);
+            
+            for (int i = 0; i < recordsToCopy.Count; i++)
+            {
+                this.CopyRecord(recordsToCopy[i], idCopyTo);
+            }
+        }
+
+        public void CopyRecord(Record record, int ListIdCopyTo)
+        {
+            string toDoListName = this.GetList(ListIdCopyTo).Name;
+
+            Record recordCopy = new Record() {
+                toDoListID = ListIdCopyTo,
+                Description = record.Description,
+                DueDate = record.DueDate,
+                Status = record.Status,
+                Title = record.Title,
+                toDoList = toDoListName,
+            };
+
+            toDoContext.Record.Add(recordCopy);
+            toDoContext.SaveChanges();
         }
     }
 }

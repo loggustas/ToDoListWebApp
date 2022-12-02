@@ -19,6 +19,9 @@
             <a asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" asp-route-hideCompleted="@false" class="buttonDelete" style="float:right">
                 Delete
             </a>
+            <a asp-controller="Home" asp-action="Copy" asp-route-id="@Model.Id" class="button" style="float:right">
+                Copy
+            </a>
         </span>
     </div>
 </div>
