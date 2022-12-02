@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ToDoList_netaspmvc.Models;
 using ToDoList_netaspmvc.Models.Repo;
@@ -42,6 +43,7 @@ namespace ToDoList_netaspmvc.Controllers
         public IActionResult Create(int id)
         {
             ViewData["ListIDCreate"] = id;
+            ViewData["ListName"] = _repository.toDoLists.FirstOrDefault(x => x.Id == id).Name;
 
             return View();
         }
@@ -66,6 +68,20 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return RedirectToAction("Index", "List", new { id = record.toDoListID });
             }
+
+            return View(record);
+        }
+
+        public async Task<ActionResult> ViewFull(int id)
+        {
+            Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["ListName"] = record.toDoList;
 
             return View(record);
         }

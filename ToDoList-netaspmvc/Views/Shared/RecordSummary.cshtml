@@ -1,4 +1,5 @@
-﻿@model Record
+﻿@using System.Globalization
+@model Record
 
 <div class="card card-outline-primary m-1 p-1" style="background-color: #F5D7E3">
     <div class="bg-faded p-1">
@@ -7,24 +8,40 @@
             @{
                 if (Model.Status.Trim().Equals("Not started"))
                 {
-                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
+                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
                 }
                 else if (Model.Status.Trim().Equals("Ongoing"))
                 {
-                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
+                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
                 }
                 else
                 {
-                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
+                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
                 }
             }
         </h4>
     </div>
-
     <div>
         <span class="card-text p-1">
-            Due: @Model.DueDate
-            <a asp-controller="List" asp-action="Summary" asp-route-id="@Model.Id" class="buttonView" style="float:right">
+            @{
+                var recordDate = DateTime.ParseExact(Model.DueDate.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                var todayDate = DateTime.Today;
+                
+                if (recordDate > todayDate)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem; background-color: #23a307">Due: @Model.DueDate</span>
+                }
+                else if (recordDate == todayDate)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem; background-color: #b59009">Due: @Model.DueDate</span>
+                }
+                else
+                {
+                    <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem;background-color: #b50937">Due: @Model.DueDate</span>
+                }
+            }
+
+            <a asp-controller="List" asp-action="ViewFull" asp-route-id="@Model.Id" class="buttonView" style="float:right">
                 Full View
             </a>
             <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" class="buttonEdit" style="float:right">
