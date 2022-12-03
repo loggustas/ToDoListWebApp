@@ -32,5 +32,7 @@ namespace ToDoList_netaspmvc.Models.Repo
         public void CopyList(int idCopyFrom, int idCopyTo);
 
         public void CopyRecord(Record record, int ListIdCopyTo);
+
+        public int CountToDoListEntries(int toDoListId);
     }
 }

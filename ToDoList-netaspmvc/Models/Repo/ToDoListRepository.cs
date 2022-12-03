@@ -153,5 +153,10 @@ namespace ToDoList_netaspmvc.Models.Repo
             toDoContext.Record.Add(recordCopy);
             toDoContext.SaveChanges();
         }
+
+        public int CountToDoListEntries(int toDoListId)
+        {
+            return toDoContext.Record.Count(x => x.toDoListID == toDoListId);
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDoList_netaspmvc.Models;
 using ToDoList_netaspmvc.Models.Repo;
+using ToDoList_netaspmvc.Models.ViewModels;
 
 namespace ToDoList_netaspmvc.Controllers
 {
@@ -23,7 +24,14 @@ namespace ToDoList_netaspmvc.Controllers
         {
             List<ToDoList> lists = await _toDoListRepository.toDoLists.OrderBy(x => x.Id).ToListAsync();
 
-            return View(lists);  
+            List<ToDoListViewModel> modelListView = new List<ToDoListViewModel>();
+
+            foreach (ToDoList list in lists)
+            {
+                modelListView.Add(new ToDoListViewModel(list, _toDoListRepository.CountToDoListEntries(list.Id)));
+            }
+
+            return View(modelListView);  
         }
 
         public IActionResult Create()
