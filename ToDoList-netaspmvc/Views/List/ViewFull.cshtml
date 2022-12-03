@@ -3,6 +3,7 @@
 
 @{
     bool hideCompletedAfter = (bool)ViewData["hideCompletedAfter"];
+    bool showDueTodayAfter = (bool)ViewData["showDueTodayAfter"];
 }
 
 <h1>@ViewData["ListName"]</h1>
@@ -54,5 +55,5 @@
     </div>
 </div>
 <div>
-    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@hideCompletedAfter">Back to List</a>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@hideCompletedAfter" asp-route-showDueToday="@showDueTodayAfter">Back to List</a>
 </div>

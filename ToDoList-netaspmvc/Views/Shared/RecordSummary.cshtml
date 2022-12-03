@@ -3,6 +3,7 @@
 
 @{
     bool hideCompleted = (bool)TempData["hideCompleted"];
+    bool showDueToday = (bool)TempData["showDueToday"];
 }
 
 <div class="card card-outline-primary m-1 p-1" style="background-color: #F5D7E3">
@@ -45,13 +46,13 @@
                 }
             }
 
-            <a asp-controller="List" asp-action="ViewFull" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" class="buttonView" style="float:right">
+            <a asp-controller="List" asp-action="ViewFull" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonView" style="float:right">
                 Full View
             </a>
-            <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" class="buttonEdit" style="float:right">
+            <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonEdit" style="float:right">
                 Edit
             </a>
-            <a asp-controller="List" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" class="buttonDelete" style="float:right">
+            <a asp-controller="List" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonDelete" style="float:right">
                 Delete
             </a>
         </span>

@@ -1,6 +1,7 @@
 ﻿@model ToDoList_netaspmvc.Models.ViewModels.RecordViewModel
 @{
     bool hideCompleteAfter = Model.hideCompletedAfter;
+    bool showDueTodayAfter = Model.showDueTodayAfter;
 }
 
 <h1>Edit</h1>
@@ -14,6 +15,7 @@
             <input type="hidden" asp-for="toDoListID" value="@Model.toDoListID"/>
             <input type="hidden" asp-for="toDoList" value="@ViewData["ListName"]"/>
             <input type="hidden" asp-for="hideCompletedAfter" value="@hideCompleteAfter" />
+            <input type="hidden" asp-for="showDueTodayAfter" value="@showDueTodayAfter" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -46,5 +48,5 @@
 </div>
 
 <div>
-    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@hideCompleteAfter">Back to List</a>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@hideCompleteAfter" asp-route-showDueToday="@showDueTodayAfter">Back to List</a>
 </div>

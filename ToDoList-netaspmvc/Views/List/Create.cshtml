@@ -3,6 +3,7 @@
 @{
     int toDoListID = (int)ViewData["ListIDCreate"];
     bool hideCompletedAfter = (bool)ViewData["hideCompletedAfter"];
+    bool showDueTodayAfter = (bool)ViewData["showDueTodayAfter"];
 }
 
 <h1>Insert</h1>
@@ -17,6 +18,7 @@
             <input type="hidden" asp-for="toDoList" value="@ViewData["ListName"]" />
             <input type="hidden" asp-for="Id" value="0" />
             <input type="hidden" asp-for="hideCompletedAfter" value="@hideCompletedAfter" />
+            <input type="hidden" asp-for="showDueTodayAfter" value="@showDueTodayAfter" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -49,6 +51,6 @@
 </div>
 
 <div>
-    <a class="buttonEdit" asp-action="Index" asp-route-id="@toDoListID" asp-route-hideCompleted="@hideCompletedAfter">Back to List</a>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@toDoListID" asp-route-hideCompleted="@hideCompletedAfter" asp-route-showDueTodayAfter="@showDueTodayAfter">Back to List</a>
 </div>
 

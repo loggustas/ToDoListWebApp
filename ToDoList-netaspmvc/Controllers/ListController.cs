@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoList_netaspmvc.Models;
@@ -20,10 +20,11 @@ namespace ToDoList_netaspmvc.Controllers
 			_repository = repository;
 		}
 
-		public IActionResult Index(int id, bool hideCompleted)
+		public IActionResult Index(int id, bool hideCompleted, bool showDueToday)
 		{
             ViewData["ListIDView"] = id;
             TempData["hideCompleted"] = hideCompleted;
+            TempData["showDueToday"] = showDueToday;
 
             List<Record> records = _repository.GetAllRecords(id);
 
@@ -33,6 +34,19 @@ namespace ToDoList_netaspmvc.Controllers
             if (hideCompleted)
             {
                 records = records.Where(x => !x.Status.Equals("Completed")).ToList();
+            }
+            if (showDueToday)
+            {
+                for (int i = records.Count - 1 ; i >= 0; i--)
+                {
+                    var recordDate = DateTime.ParseExact(records[i].DueDate.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    var todayDate = DateTime.Today;
+
+                    if (recordDate != todayDate)
+                    {
+                        records.RemoveAt(i);
+                    }
+                }
             }
 
             string? name = _repository.GetList(id)?.Name;
@@ -50,11 +64,12 @@ namespace ToDoList_netaspmvc.Controllers
             return View(records);
 		}
 
-        public IActionResult Create(int id, bool hideCompletedAfter)
+        public IActionResult Create(int id, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             ViewData["ListIDCreate"] = id;
             ViewData["ListName"] = _repository.toDoLists.FirstOrDefault(x => x.Id == id).Name;
             ViewData["hideCompletedAfter"] = hideCompletedAfter;
+            ViewData["showDueTodayAfter"] = showDueTodayAfter;
 
             return View();
         }
@@ -78,13 +93,16 @@ namespace ToDoList_netaspmvc.Controllers
                     TempData["Error"] = "Something went wrong while adding the record.";
                 }
 
-                return RedirectToAction("Index", "List", new { id = record.toDoListID, hideCompleted = recordViewModel.hideCompletedAfter });
+                return RedirectToAction("Index", "List", new { 
+                    id = record.toDoListID,
+                    hideCompleted = recordViewModel.hideCompletedAfter,
+                    showDueToday = recordViewModel.showDueTodayAfter
+                });
             }
-
             return View(record);
         }
 
-        public async Task<ActionResult> ViewFull(int id, bool hideCompletedAfter)
+        public async Task<ActionResult> ViewFull(int id, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -95,15 +113,16 @@ namespace ToDoList_netaspmvc.Controllers
 
             ViewData["ListName"] = record.toDoList;
             ViewData["hideCompletedAfter"] = hideCompletedAfter;
+            ViewData["showDueTodayAfter"] = showDueTodayAfter;
 
             return View(record);
         }
 
-        public async Task<ActionResult> EditRecord(int id, bool hideCompletedAfter)
+        public async Task<ActionResult> EditRecord(int id, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
 
-            RecordViewModel recordViewModel = new RecordViewModel(record, hideCompletedAfter);
+            RecordViewModel recordViewModel = new RecordViewModel(record, hideCompletedAfter, showDueTodayAfter);
 
             if (record == null)
             {
@@ -135,13 +154,17 @@ namespace ToDoList_netaspmvc.Controllers
                     TempData["Error"] = "Something went wrong while updating the record list.";
                 }
 
-                return RedirectToAction("Index", "List", new { id = record.toDoListID, hideCompleted = recordViewModel.hideCompletedAfter});
+                return RedirectToAction("Index", "List", new { 
+                    id = record.toDoListID,
+                    hideCompleted = recordViewModel.hideCompletedAfter,
+                    showDueToday = recordViewModel.showDueTodayAfter
+                });
             }
 
             return View(record);
         }
 
-        public async Task<ActionResult> DeleteRecord(int id, bool hideCompletedAfter)
+        public async Task<ActionResult> DeleteRecord(int id, bool hideCompletedAfter, bool showDueTodayAfter)
 		{
 			int toDoListId = _repository.GetRecord(id).toDoListID;
             if (ModelState.IsValid)
@@ -158,7 +181,11 @@ namespace ToDoList_netaspmvc.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "List", new { id = toDoListId, hideCompleted = hideCompletedAfter});
+            return RedirectToAction("Index", "List", new { 
+                id = toDoListId,
+                hideCompleted = hideCompletedAfter,
+                showDueToday = showDueTodayAfter,
+            });
         }
     }
 }

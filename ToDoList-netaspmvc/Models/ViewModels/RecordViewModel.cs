@@ -2,7 +2,7 @@
 {
     public class RecordViewModel
     {
-        public RecordViewModel(int id, string toDoList, int number, string title, string description, string dueDate, string status, int toDoListID, bool hideCompletedAfter)
+        public RecordViewModel(int id, string toDoList, int number, string title, string description, string dueDate, string status, int toDoListID, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             Id = id;
             this.toDoList = toDoList;
@@ -13,9 +13,10 @@
             Status = status;
             this.toDoListID = toDoListID;
             this.hideCompletedAfter = hideCompletedAfter;
+            this.showDueTodayAfter = showDueTodayAfter;
         }
 
-        public RecordViewModel(Record record, bool hideCompletedAfter)
+        public RecordViewModel(Record record, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             Id = record.Id;
             this.toDoList = record.toDoList;
@@ -26,6 +27,7 @@
             Status = record.Status;
             this.toDoListID = record.toDoListID;
             this.hideCompletedAfter = hideCompletedAfter;
+            this.showDueTodayAfter = showDueTodayAfter;
         }
 
         public RecordViewModel()
@@ -50,5 +52,7 @@
         public int toDoListID { get; set; }
 
         public bool hideCompletedAfter { get; set; }
+
+        public bool showDueTodayAfter { get; set; }
     }
 }
