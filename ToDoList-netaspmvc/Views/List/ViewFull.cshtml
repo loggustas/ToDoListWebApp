@@ -1,6 +1,9 @@
 ﻿@using System.Globalization
 @model ToDoList_netaspmvc.Models.Record
 
+@{
+    bool hideCompletedAfter = (bool)ViewData["hideCompletedAfter"];
+}
 
 <h1>@ViewData["ListName"]</h1>
 
@@ -13,15 +16,15 @@
                 @{
                     if (Model.Status.Trim().Equals("Not started"))
                     {
-                        <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
+                            <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
                     }
                     else if (Model.Status.Trim().Equals("Ongoing"))
                     {
-                        <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
+                            <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
                     }
                     else
                     {
-                        <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
+                            <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
                     }
                 }
             </h4>
@@ -36,20 +39,20 @@
 
                 if (recordDate > todayDate)
                 {
-                    <span class="badge badge-pill badge-primary" style="float:left; background-color: #23a307">Due: @Model.DueDate</span>
+                        <span class="badge badge-pill badge-primary" style="float:left; background-color: #23a307">Due: @Model.DueDate</span>
                 }
                 else if (recordDate == todayDate)
                 {
-                    <span class="badge badge-pill badge-primary" style="float:left; background-color: #b59009">Due: @Model.DueDate</span>
+                        <span class="badge badge-pill badge-primary" style="float:left; background-color: #b59009">Due: @Model.DueDate</span>
                 }
                 else
                 {
-                    <span class="badge badge-pill badge-primary" style="float:left; background-color: #b50937">Due: @Model.DueDate</span>
+                        <span class="badge badge-pill badge-primary" style="float:left; background-color: #b50937">Due: @Model.DueDate</span>
                 }
             }
         </div>
     </div>
 </div>
 <div>
-    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@false">Back to List</a>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListID" asp-route-hideCompleted="@hideCompletedAfter">Back to List</a>
 </div>

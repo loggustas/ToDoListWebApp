@@ -81,7 +81,7 @@ namespace ToDoList_netaspmvc.Controllers
             return View(record);
         }
 
-        public async Task<ActionResult> ViewFull(int id)
+        public async Task<ActionResult> ViewFull(int id, bool hideCompletedAfter)
         {
             Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -91,6 +91,7 @@ namespace ToDoList_netaspmvc.Controllers
             }
 
             ViewData["ListName"] = record.toDoList;
+            ViewData["hideCompletedAfter"] = hideCompletedAfter;
 
             return View(record);
         }
