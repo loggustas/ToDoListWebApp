@@ -22,7 +22,7 @@ namespace ToDoList_netaspmvc.Controllers
 		public IActionResult Index(int id, bool hideCompleted)
 		{
             ViewData["ListIDView"] = id;
-            ViewData["hideCompleted"] = hideCompleted;
+            TempData["hideCompleted"] = hideCompleted;
 
             List<Record> records = _repository.GetAllRecords(id);
 
@@ -133,7 +133,7 @@ namespace ToDoList_netaspmvc.Controllers
             return View(record);
         }
 
-        public async Task<ActionResult> DeleteRecord(int id)
+        public async Task<ActionResult> DeleteRecord(int id, bool hideCompletedAfter)
 		{
 			int toDoListId = _repository.GetRecord(id).toDoListID;
             if (ModelState.IsValid)
@@ -150,7 +150,7 @@ namespace ToDoList_netaspmvc.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "List", new { id = toDoListId});
+            return RedirectToAction("Index", "List", new { id = toDoListId, hideCompleted = hideCompletedAfter});
         }
     }
 }
