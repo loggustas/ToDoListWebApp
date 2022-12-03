@@ -6,7 +6,14 @@
         <h4>
             @Model.Name
             @{
-                <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount records</span>
+                if (Model.RecordCount == 1)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount task</span>
+                }
+                else
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount tasks</span>
+                }
             }
         </h4>
     </div>

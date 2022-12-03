@@ -6,9 +6,27 @@
     bool hideCompleted = (bool)TempData["hideCompleted"];
     bool isListEmpty = (bool)ViewData["isListEmpty"];
     bool showDueToday = (bool)TempData["showDueToday"];
+    int recordCount = (int)ViewData["recordCount"];
 }
 
-<h1>@ViewData["ListName"]</h1>
+<div class="bg-faded p-1">
+    <h2>
+        @{
+        if (recordCount == 1)
+        {
+            <span class="badge badge-pill badge-primary" style="background-color: #c26994">@recordCount task</span>
+        }
+        else
+        {
+            <span class="badge badge-pill badge-primary" style="background-color: #c26994">@recordCount tasks</span>
+        }
+        }
+    </h2>
+ </div>
+
+<h1>
+    @ViewData["ListName"]
+</h1>
 
 <p>
     @{

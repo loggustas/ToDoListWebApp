@@ -28,7 +28,9 @@ namespace ToDoList_netaspmvc.Controllers
 
             List<Record> records = _repository.GetAllRecords(id);
 
-            bool isListEmpty = records.Count() == 0;
+            ViewData["recordCount"] = records.Count;
+
+            bool isListEmpty = records.Count == 0;
             ViewData["isListEmpty"] = isListEmpty;
 
             if (hideCompleted)
