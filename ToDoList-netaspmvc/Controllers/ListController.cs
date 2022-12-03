@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDoList_netaspmvc.Models;
 using ToDoList_netaspmvc.Models.Repo;
+using ToDoList_netaspmvc.Models.ViewModels;
 
 namespace ToDoList_netaspmvc.Controllers
 {
@@ -96,9 +97,11 @@ namespace ToDoList_netaspmvc.Controllers
             return View(record);
         }
 
-        public async Task<ActionResult> EditRecord(int id)
+        public async Task<ActionResult> EditRecord(int id, bool hideCompletedAfter)
         {
             Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
+
+            RecordViewModel recordViewModel = new RecordViewModel(record, hideCompletedAfter);
 
             if (record == null)
             {
@@ -107,14 +110,16 @@ namespace ToDoList_netaspmvc.Controllers
 
             ViewData["ListName"] = record.toDoList;
 
-            return View(record);
+            return View(recordViewModel);
         }
 
         //Post home/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditRecord(Record record)
+        public async Task<ActionResult> EditRecord(RecordViewModel recordViewModel)
         {
+            Record record = new Record(recordViewModel);
+
             if (ModelState.IsValid)
             {
                 bool result = await _repository.UpdateRecord(record);
@@ -128,7 +133,7 @@ namespace ToDoList_netaspmvc.Controllers
                     TempData["Error"] = "Something went wrong while updating the record list.";
                 }
 
-                return RedirectToAction("Index", "List", new { id = record.toDoListID});
+                return RedirectToAction("Index", "List", new { id = record.toDoListID, hideCompleted = recordViewModel.hideCompletedAfter});
             }
 
             return View(record);

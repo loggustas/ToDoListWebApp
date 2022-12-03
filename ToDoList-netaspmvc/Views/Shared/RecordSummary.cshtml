@@ -48,7 +48,7 @@
             <a asp-controller="List" asp-action="ViewFull" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" class="buttonView" style="float:right">
                 Full View
             </a>
-            <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" class="buttonEdit" style="float:right">
+            <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" class="buttonEdit" style="float:right">
                 Edit
             </a>
             <a asp-controller="List" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" class="buttonDelete" style="float:right">
