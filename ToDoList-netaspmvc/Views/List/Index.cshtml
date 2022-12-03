@@ -22,7 +22,11 @@
         {
                 <span>
                 @{
-                if (!isListEmpty && !hideCompleted && !showDueToday)
+                if(isListEmpty)
+                {
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
+                }
+                else if (!isListEmpty && !hideCompleted && !showDueToday)
                 {
                     <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@false">Hide completed</a>
