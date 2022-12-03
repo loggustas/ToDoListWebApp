@@ -50,10 +50,11 @@ namespace ToDoList_netaspmvc.Controllers
             return View(records);
 		}
 
-        public IActionResult Create(int id)
+        public IActionResult Create(int id, bool hideCompletedAfter)
         {
             ViewData["ListIDCreate"] = id;
             ViewData["ListName"] = _repository.toDoLists.FirstOrDefault(x => x.Id == id).Name;
+            ViewData["hideCompletedAfter"] = hideCompletedAfter;
 
             return View();
         }
@@ -61,8 +62,9 @@ namespace ToDoList_netaspmvc.Controllers
         //Post Home/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Record record)
+        public async Task<ActionResult> Create(RecordViewModel recordViewModel)
         {
+            Record record = new Record(recordViewModel);
             if (ModelState.IsValid)
             {
                 bool result = await _repository.AddRecord(record);
@@ -76,7 +78,7 @@ namespace ToDoList_netaspmvc.Controllers
                     TempData["Error"] = "Something went wrong while adding the record.";
                 }
 
-                return RedirectToAction("Index", "List", new { id = record.toDoListID });
+                return RedirectToAction("Index", "List", new { id = record.toDoListID, hideCompleted = recordViewModel.hideCompletedAfter });
             }
 
             return View(record);

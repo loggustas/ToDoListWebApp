@@ -20,15 +20,16 @@
         if (listExists)
         {
                 <span>
-                <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id">Add new record to a list</a>
                 @{
                 if (!isListEmpty && !hideCompleted)
                 {
-                            <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true">Hide completed</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false">Add new record to a list</a>
+                    <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true">Hide completed</a>
                 }
                 else if (!isListEmpty && hideCompleted)
                 {
-                            <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false">Show completed</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true">Add new record to a list</a>
+                    <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false">Show completed</a>
                 }
                 }
                 <a class="buttonEdit" asp-controller="Home" asp-action="Index">Back</a>
