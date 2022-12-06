@@ -101,7 +101,9 @@ namespace ToDoList_netaspmvc.Controllers
                     showDueToday = recordViewModel.showDueTodayAfter
                 });
             }
-            return View(record);
+            Console.WriteLine("Post:");
+            Console.WriteLine("id: " + recordViewModel.toDoListID + "   ");
+            return View(recordViewModel);
         }
 
         public async Task<ActionResult> ViewFull(int id, bool hideCompletedAfter, bool showDueTodayAfter)
@@ -163,7 +165,7 @@ namespace ToDoList_netaspmvc.Controllers
                 });
             }
 
-            return View(record);
+            return View(recordViewModel);
         }
 
         public async Task<ActionResult> DeleteRecord(int id, bool hideCompletedAfter, bool showDueTodayAfter)
