@@ -55,6 +55,9 @@
             <a class="buttonDelete" data-toggle="modal" data-target="#deleteModal" style="float:right; color: #FFFFFF">
                 Delete
             </a>
+            <a asp-controller="List" asp-action="CreateNotification" asp-route-recordId="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonBack" style="float:right">
+                Create reminder
+            </a>
         </span>
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

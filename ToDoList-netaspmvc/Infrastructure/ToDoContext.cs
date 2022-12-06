@@ -16,5 +16,6 @@ namespace ToDoList_netaspmvc.Infrastructure
 
         public DbSet<ToDoList> ToDoList { get; set; }
         public DbSet<Record> Record { get; set; }
+        public DbSet<Notification> Notification { get; set; }
     }
 }

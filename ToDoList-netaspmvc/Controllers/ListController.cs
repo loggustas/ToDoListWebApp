@@ -14,10 +14,13 @@ namespace ToDoList_netaspmvc.Controllers
 	public class ListController : Controller
 	{
 		private readonly IToDoListRepository _repository;
+        
+        private readonly INotificationRepository _notificationRepository;
 
-		public ListController(IToDoListRepository repository)
+		public ListController(IToDoListRepository repository, INotificationRepository notificationRepository)
 		{
 			_repository = repository;
+            _notificationRepository = notificationRepository;
 		}
 
 		public IActionResult Index(int id, bool hideCompleted, bool showDueToday)
@@ -101,9 +104,57 @@ namespace ToDoList_netaspmvc.Controllers
                     showDueToday = recordViewModel.showDueTodayAfter
                 });
             }
-            Console.WriteLine("Post:");
-            Console.WriteLine("id: " + recordViewModel.toDoListID + "   ");
+
             return View(recordViewModel);
+        }
+
+        public IActionResult CreateNotification(int recordId, bool hideCompletedAfter, bool showDueTodayAfter)
+        {
+            Record record = _repository.GetRecord(recordId);
+            NotificationViewModel notificationViewModel = new NotificationViewModel
+            {
+                Id = 0,
+                toDoListId = record.toDoListID,
+                recordId = record.Id,
+                recordDescription = record.Description,
+                recordTitle = record.Title,
+                DueDate = record.DueDate,
+                IsRead = false
+            };
+
+            ViewData["hideCompletedAfter"] = hideCompletedAfter;
+            ViewData["showDueTodayAfter"] = showDueTodayAfter;
+
+            return View(notificationViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateNotification(NotificationViewModel notificationViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Notification notification = new Notification(notificationViewModel);
+                bool result = _notificationRepository.Create(notification);
+
+                if (result)
+                {
+                    TempData["Success"] = "The record has been added!";
+                }
+                else
+                {
+                    TempData["Error"] = "Something went wrong while adding the record.";
+                }
+
+                return RedirectToAction("Index", "List", new
+                {
+                    id = notificationViewModel.toDoListId,
+                    hideCompleted = notificationViewModel.hideCompletedAfter,
+                    showDueToday = notificationViewModel.showDueTodayAfter
+                });
+            }
+
+            return View(notificationViewModel);
         }
 
         public async Task<ActionResult> ViewFull(int id, bool hideCompletedAfter, bool showDueTodayAfter)

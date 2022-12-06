@@ -1,0 +1,46 @@
+﻿@model ToDoList_netaspmvc.Models.ViewModels.NotificationViewModel
+
+@{
+    bool hideCompletedAfter = Model.hideCompletedAfter;
+    bool showDueTodayAfter = Model.showDueTodayAfter;
+    int toDoListId = Model.toDoListId; ;
+    int recordId = Model.recordId;;
+    string recordDescription = Model.recordDescription;;
+    string recordTitle = Model.recordTitle;;
+    string DueDate = Model.DueDate;
+}
+
+<h1>Create a Reminder</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateNotification">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="toDoListId" value="@toDoListId" />
+            <input type="hidden" asp-for="recordId" value="@recordId" />
+            <input type="hidden" asp-for="recordTitle" value="@recordTitle" />
+            <input type="hidden" asp-for="recordDescription" value="@recordDescription" />
+            <input type="hidden" asp-for="DueDate" value="@DueDate" />
+
+            <div class="form-group">
+                <label asp-for="DateToRemind" class="control-label">Date to remind</label>
+                <input asp-for="DateToRemind" class="form-control" type="date" />
+                <span asp-validation-for="DateToRemind" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label">Note</label>
+                <textarea asp-for="Text" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Save" class="buttonb">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="buttonEdit" asp-action="Index" asp-route-id="@Model.toDoListId" asp-route-hideCompleted="@hideCompletedAfter" asp-route-showDueToday="@showDueTodayAfter">Back to List</a>
+</div>
+
+
