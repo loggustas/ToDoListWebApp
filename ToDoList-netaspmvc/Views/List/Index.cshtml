@@ -59,18 +59,18 @@
                 }
                 else if (!isListEmpty && !hideCompleted && showDueToday)
                 {
-                        <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@true">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@true">Add new record to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@true">Hide completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@false">Show due all</a>
                 }
                 else if (!isListEmpty && hideCompleted && !showDueToday)
                 {
-                        <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@false">Include completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@true">Show due today</a>
                 }
                 }
-                <a class="buttonEdit" asp-controller="Home" asp-action="Index">Back</a>
+                <a class="buttonBack" asp-controller="Home" asp-action="Index">Back</a>
                 </span>
         }
     }
