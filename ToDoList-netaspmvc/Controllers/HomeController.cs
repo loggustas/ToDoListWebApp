@@ -44,7 +44,6 @@ namespace ToDoList_netaspmvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ToDoList list)
         {
-            Console.WriteLine(list.Id + "   " + list.Name + "    " + list.Description);
             if (ModelState.IsValid)
             {
                 int? result = await _toDoListRepository.AddToDoList(list);
