@@ -24,6 +24,7 @@ namespace ToDoList_netaspmvc
         {
             services.AddControllersWithViews();
             services.AddScoped<IToDoListRepository, ToDoListRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
 
             services.AddDbContext<ToDoContext>(options => options.UseSqlServer
             (Configuration.GetConnectionString("ToDoContext")));  //sitas pridetas is g
