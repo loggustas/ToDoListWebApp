@@ -22,6 +22,11 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public async Task<bool> AddRecord(Record record)
         {
+            if (string.IsNullOrWhiteSpace(record.Description))
+            {
+                record.Description = "No description.";
+            }
+
             toDoContext.Record.Add(record);
             int numOfRecs = await toDoContext.SaveChangesAsync();
 
@@ -37,6 +42,11 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public async Task<int?> AddToDoList(ToDoList toDoList)
         {
+            if (string.IsNullOrWhiteSpace(toDoList.Description))
+            {
+                toDoList.Description = "No description.";
+            }
+
             toDoContext.ToDoList.Add(toDoList);
             await toDoContext.SaveChangesAsync();
 
@@ -93,7 +103,12 @@ namespace ToDoList_netaspmvc.Models.Repo
         }
 
         public async Task<bool> UpdateList(ToDoList toDoList)
-        {
+        {   
+            if (string.IsNullOrWhiteSpace(toDoList.Description))
+            {
+                toDoList.Description = "No description.";
+            }
+
             toDoContext.ToDoList.Update(toDoList);
             int numOfUpdates = await toDoContext.SaveChangesAsync();
 
@@ -109,6 +124,11 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public async Task<bool> UpdateRecord(Record record)
         {
+            if (string.IsNullOrWhiteSpace(record.Description))
+            {
+                record.Description = "No description.";
+            }
+
             toDoContext.Record.Update(record);
             int numOfUpdates = await toDoContext.SaveChangesAsync();
 
