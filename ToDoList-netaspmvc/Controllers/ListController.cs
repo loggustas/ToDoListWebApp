@@ -91,11 +91,11 @@ namespace ToDoList_netaspmvc.Controllers
 
                 if (result)
                 {
-                    TempData["Success"] = "The record has been added!";
+                    TempData["Success"] = "The task has been added!";
                 }
                 else
                 {
-                    TempData["Error"] = "Something went wrong while adding the record.";
+                    TempData["Error"] = "Something went wrong while adding the task.";
                 }
 
                 return RedirectToAction("Index", "List", new { 
@@ -139,11 +139,11 @@ namespace ToDoList_netaspmvc.Controllers
 
                 if (result)
                 {
-                    TempData["Success"] = "The record has been added!";
+                    TempData["Success"] = "The notification has been added!";
                 }
                 else
                 {
-                    TempData["Error"] = "Something went wrong while adding the record.";
+                    TempData["Error"] = "Something went wrong while adding the notification.";
                 }
 
                 return RedirectToAction("Index", "List", new
@@ -202,11 +202,11 @@ namespace ToDoList_netaspmvc.Controllers
 
                 if (result)
                 {
-                    TempData["Success"] = "The record has been updated!";
+                    TempData["Success"] = "The task has been updated!";
                 }
                 else
                 {
-                    TempData["Error"] = "Something went wrong while updating the record list.";
+                    TempData["Error"] = "Something went wrong while updating the task.";
                 }
 
                 return RedirectToAction("Index", "List", new { 
@@ -228,11 +228,11 @@ namespace ToDoList_netaspmvc.Controllers
 
                 if (result)
                 {
-                    TempData["Success"] = "The record was successfully deleted!";
+                    TempData["Success"] = "The task was successfully deleted!";
                 }
                 else
                 {
-                    TempData["Error"] = "Something went wrong while Editting list.";
+                    TempData["Error"] = "Something went wrong while deleting the task.";
                 }
             }
 
