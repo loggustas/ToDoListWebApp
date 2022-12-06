@@ -1,4 +1,6 @@
-﻿namespace ToDoList_netaspmvc.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoList_netaspmvc.Models.ViewModels
 {
     public class RecordViewModel
     {
@@ -41,12 +43,17 @@
 
         public int Number { get; set; }
 
+        [StringLength(50, MinimumLength = 2)]
+        [Required]
         public string Title { get; set; }
 
+        [StringLength(150)]
         public string Description { get; set; }
 
+        [Required]
         public string DueDate { get; set; }
 
+        [Required]
         public string Status { get; set; }
 
         public int toDoListID { get; set; }
