@@ -13,15 +13,15 @@
             @{
                 if (Model.Status.Trim().Equals("Not started"))
                 {
-                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
+                                        <span class="badge badge-pill badge-primary" style="float:right; background-color: #b50937">@Model.Status</span>
                 }
                 else if (Model.Status.Trim().Equals("Ongoing"))
                 {
-                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
+                                        <span class="badge badge-pill badge-primary" style="float:right; background-color: #b59009">@Model.Status</span>
                 }
                 else
                 {
-                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
+                                        <span class="badge badge-pill badge-primary" style="float:right; background-color: #23a307">@Model.Status</span>
                 }
             }
         </h4>
@@ -34,15 +34,15 @@
                 
                 if (recordDate > todayDate)
                 {
-                    <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem; background-color: #23a307">Due: @Model.DueDate</span>
+                            <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem; background-color: #23a307">Due: @Model.DueDate</span>
                 }
                 else if (recordDate == todayDate)
                 {
-                    <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem; background-color: #b59009">Due: @Model.DueDate</span>
+                            <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem; background-color: #b59009">Due: @Model.DueDate</span>
                 }
                 else
                 {
-                    <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem;background-color: #b50937">Due: @Model.DueDate</span>
+                            <span class="badge badge-pill badge-primary" style="float:left; margin-top: 1.2rem;background-color: #b50937">Due: @Model.DueDate</span>
                 }
             }
 
@@ -52,9 +52,30 @@
             <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonEdit" style="float:right">
                 Edit
             </a>
-            <a asp-controller="List" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonDelete" style="float:right">
+            <a class="buttonDelete" data-toggle="modal" data-target="#deleteModal" style="float:right; color: #FFFFFF">
                 Delete
             </a>
         </span>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete the task.</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        You sure want to delete this task?
+                    </div>
+                    <div class="modal-footer">
+                        <a class="button" data-dismiss="modal" style="color: #FFFFFF">Close</a>
+                        <a asp-controller="List" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonDelete">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
