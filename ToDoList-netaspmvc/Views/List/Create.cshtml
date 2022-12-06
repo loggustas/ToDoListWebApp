@@ -1,9 +1,21 @@
 ﻿@model ToDoList_netaspmvc.Models.ViewModels.RecordViewModel
 
 @{
-    int toDoListID = (int)ViewData["ListIDCreate"];
-    bool hideCompletedAfter = (bool)ViewData["hideCompletedAfter"];
-    bool showDueTodayAfter = (bool)ViewData["showDueTodayAfter"];
+    int toDoListID;
+    bool hideCompletedAfter;
+    bool showDueTodayAfter;
+    if (Model == null)
+    {
+        toDoListID = (int)ViewData["ListIDCreate"];
+        hideCompletedAfter = (bool)ViewData["hideCompletedAfter"];
+        showDueTodayAfter = (bool)ViewData["showDueTodayAfter"];
+    }
+    else
+    {
+        toDoListID = Model.toDoListID;
+        hideCompletedAfter = Model.hideCompletedAfter;
+        showDueTodayAfter = Model.showDueTodayAfter;
+    }
 }
 
 <h1>Insert</h1>
