@@ -75,7 +75,7 @@ namespace ToDoList_netaspmvc.Controllers
         public IActionResult Create(int id, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             ViewData["ListIDCreate"] = id;
-            ViewData["ListName"] = _repository.toDoLists.FirstOrDefault(x => x.Id == id).Name;
+            ViewData["ListName"] = _repository.toDoLists.FirstOrDefault(x => x.Id == id)?.Name;
             ViewData["hideCompletedAfter"] = hideCompletedAfter;
             ViewData["showDueTodayAfter"] = showDueTodayAfter;
 
