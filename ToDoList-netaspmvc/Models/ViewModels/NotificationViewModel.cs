@@ -21,7 +21,8 @@ namespace ToDoList_netaspmvc.Models.ViewModels
 
         public bool IsRead { get; set; }
 
-        [StringLength(200)]
+        [Required]
+        [StringLength(200, MinimumLength = 2)]
         public string Text { get; set; }
 
         public bool hideCompletedAfter { get; set; }
