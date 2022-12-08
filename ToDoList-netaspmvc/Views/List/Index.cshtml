@@ -6,6 +6,7 @@
     bool hideCompleted = (bool)TempData["hideCompleted"];
     bool isListEmpty = (bool)ViewData["isListEmpty"];
     bool showDueToday = (bool)TempData["showDueToday"];
+    List<Notification> notificationList = (List<Notification>)TempData["notificationList"];
     int recordCount = (int)ViewData["recordCount"];
 }
 
@@ -38,8 +39,8 @@
     @{
         if (listExists)
         {
-                <span>
-                @{
+            <span>
+            @{
                 if(isListEmpty)
                 {
                     <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
@@ -69,12 +70,41 @@
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@false">Include completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@true">Show due today</a>
                 }
+                
+                if(notificationList.Count > 0)
+                {
+                    <a class="buttonView" data-toggle="modal" data-target="#reminderModal" style="color: #FFFFFF">
+                        Remind
+                    </a>
                 }
-                <a class="buttonBack" asp-controller="Home" asp-action="Index">Back</a>
-                </span>
+            }
+            <a class="buttonBack" asp-controller="Home" asp-action="Index">Back</a>
+            </span>
         }
     }
 </p>
+
+<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reminderModalTitle">Remind Today:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var notification in notificationList)
+                {
+                    <partial name="NotificationSummary" model="notification" />
+                }
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="button" data-dismiss="modal" style="color: #FFFFFF">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 @foreach (var record in Model)
 {

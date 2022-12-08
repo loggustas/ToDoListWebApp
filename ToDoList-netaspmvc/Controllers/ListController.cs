@@ -36,6 +36,9 @@ namespace ToDoList_netaspmvc.Controllers
             bool isListEmpty = records.Count == 0;
             ViewData["isListEmpty"] = isListEmpty;
 
+            List<Notification> notificationList = _notificationRepository.GetNotificationsForList(id);
+            TempData["notificationList"] = notificationList; 
+
             if (hideCompleted)
             {
                 records = records.Where(x => !x.Status.Equals("Completed")).ToList();
@@ -139,11 +142,11 @@ namespace ToDoList_netaspmvc.Controllers
 
                 if (result)
                 {
-                    TempData["Success"] = "The notification has been added!";
+                    TempData["Success"] = "The reminder has been added!";
                 }
                 else
                 {
-                    TempData["Error"] = "Something went wrong while adding the notification.";
+                    TempData["Error"] = "Something went wrong while adding the reminder.";
                 }
 
                 return RedirectToAction("Index", "List", new
