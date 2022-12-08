@@ -79,7 +79,7 @@ namespace ToDoList_netaspmvc.Models.Repo
                 }
             }
 
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void DeleteNotificationsForList(int toDoListId)
