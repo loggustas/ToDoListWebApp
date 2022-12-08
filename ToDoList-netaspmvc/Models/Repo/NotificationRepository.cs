@@ -94,7 +94,7 @@ namespace ToDoList_netaspmvc.Models.Repo
                 }
             }
 
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }
