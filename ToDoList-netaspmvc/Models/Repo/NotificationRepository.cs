@@ -47,12 +47,17 @@ namespace ToDoList_netaspmvc.Models.Repo
             for (int i = notificationList.Count - 1; i >= 0; i--)
             {
                 var notificationDate = DateTime.ParseExact(notificationList[i].DateToRemind.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                if (DateTime.Today != notificationDate)
+                if (DateTime.Today > notificationDate)
+                {
+                    _context.Notification.Remove(notificationList[i]);
+                }
+                else if (DateTime.Today != notificationDate)
                 {
                     notificationList.RemoveAt(i);
                 }
             }
 
+            _context.SaveChanges();
             return notificationList;
         }
 
@@ -60,7 +65,5 @@ namespace ToDoList_netaspmvc.Models.Repo
         {
             _context.Notification.Update(notification);
         }
-
-        
     }
 }
