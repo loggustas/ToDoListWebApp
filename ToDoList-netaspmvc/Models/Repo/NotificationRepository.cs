@@ -41,9 +41,9 @@ namespace ToDoList_netaspmvc.Models.Repo
             return _context.Notification.ToList();
         }
 
-        public Notification GetNotification(int id)
+        public List<Notification> GetNotificationsForList(int toDoListId)
         {
-            return _context.Notification.FirstOrDefault(x => x.Id == id);
+            return _context.Notification.Where(x => x.toDoListId == toDoListId).ToList();
         }
 
         public void UpdateNotification(Notification notification)
