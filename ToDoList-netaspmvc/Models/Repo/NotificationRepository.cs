@@ -50,5 +50,17 @@ namespace ToDoList_netaspmvc.Models.Repo
         {
             _context.Notification.Update(notification);
         }
+
+        public bool AreThereNotificationsForList(int toDoListId)
+        {
+            if(this.GetNotificationsForList(toDoListId).Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
