@@ -14,10 +14,14 @@ namespace ToDoList_netaspmvc.Controllers
     public class HomeController : Controller
     {
         private IToDoListRepository _toDoListRepository;
+        
+        private readonly INotificationRepository _notificationRepository;
 
-        public HomeController(IToDoListRepository repo)
+
+        public HomeController(IToDoListRepository repo, INotificationRepository notificationRepository)
         {
             _toDoListRepository = repo;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<ActionResult> Index()
@@ -142,6 +146,7 @@ namespace ToDoList_netaspmvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                _notificationRepository.DeleteNotificationsForList(id);
                 bool result = await _toDoListRepository.DeleteList(id);
 
                 if (result)

@@ -227,6 +227,7 @@ namespace ToDoList_netaspmvc.Controllers
 			int toDoListId = _repository.GetRecord(id).toDoListID;
             if (ModelState.IsValid)
             {
+                _notificationRepository.DeleteNotificationsForRecord(id);
                 bool result = await _repository.DeleteRecord(id);
 
                 if (result)
