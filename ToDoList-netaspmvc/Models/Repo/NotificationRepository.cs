@@ -44,16 +44,15 @@ namespace ToDoList_netaspmvc.Models.Repo
         public List<Notification> GetNotificationsForList(int toDoListId)
         {
             List<Notification> notificationList = _context.Notification.Where(x => x.toDoListId == toDoListId).ToList();
-            
             for (int i = notificationList.Count - 1; i >= 0; i--)
             {
-                var notificationDate = DateTime.ParseExact(notificationList[i].DueDate.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                var notificationDate = DateTime.ParseExact(notificationList[i].DateToRemind.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 if (DateTime.Today != notificationDate)
                 {
                     notificationList.RemoveAt(i);
                 }
             }
-            
+
             return notificationList;
         }
 
