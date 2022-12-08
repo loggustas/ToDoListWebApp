@@ -57,7 +57,7 @@ namespace ToDoList_netaspmvc.Controllers
                 }
             }
 
-            string? name = _repository.GetList(id)?.Name;
+            string name = _repository.GetList(id)?.Name;
             if(name == null)
             {
                 ViewData["ListName"] = "There is no such list with this id.";
