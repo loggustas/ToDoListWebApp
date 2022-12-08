@@ -58,6 +58,9 @@ namespace ToDoList_netaspmvc.Models.ViewModels
 
         public int toDoListID { get; set; }
 
+        [StringLength(1200)]
+        public string Notes { get; set; }
+
         public bool hideCompletedAfter { get; set; }
 
         public bool showDueTodayAfter { get; set; }

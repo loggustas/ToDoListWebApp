@@ -36,5 +36,7 @@ namespace ToDoList_netaspmvc.Models
         public string Status { get; set; }
 
         public int toDoListID { get; set; }
+
+        public string Notes { get; set; }
     }
 }
