@@ -4,7 +4,7 @@ namespace ToDoList_netaspmvc.Models.ViewModels
 {
     public class RecordViewModel
     {
-        public RecordViewModel(int id, string toDoList, int number, string title, string description, string dueDate, string status, int toDoListID, bool hideCompletedAfter, bool showDueTodayAfter)
+        public RecordViewModel(int id, string toDoList, int number, string title, string description, string dueDate, string status, int toDoListID, string Notes, bool hideCompletedAfter, bool showDueTodayAfter)
         {
             Id = id;
             this.toDoList = toDoList;
@@ -14,6 +14,7 @@ namespace ToDoList_netaspmvc.Models.ViewModels
             DueDate = dueDate;
             Status = status;
             this.toDoListID = toDoListID;
+            this.Notes = Notes;
             this.hideCompletedAfter = hideCompletedAfter;
             this.showDueTodayAfter = showDueTodayAfter;
         }
@@ -22,6 +23,7 @@ namespace ToDoList_netaspmvc.Models.ViewModels
         {
             Id = record.Id;
             this.toDoList = record.toDoList;
+            this.Notes = record.Notes;
             Number = record.Number;
             Title = record.Title;
             Description = record.Description;

@@ -14,6 +14,7 @@ namespace ToDoList_netaspmvc.Models
             DueDate = recordViewModel.DueDate;
             Status = recordViewModel.Status;
             toDoListID = recordViewModel.toDoListID;
+            Notes = recordViewModel.Notes;
         }
 
         public Record()
