@@ -33,6 +33,13 @@
         <div>
             Description: @Model.Description
         </div>
+        @if (Model.Notes != null)
+        {
+            <div>
+                Notes: @Model.Notes
+            </div>
+        }
+
         <div class="bg-faded p-1">
             @{
                 var recordDate = DateTime.ParseExact(Model.DueDate.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
