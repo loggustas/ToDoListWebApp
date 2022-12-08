@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using ToDoList_netaspmvc.Infrastructure;
 
 namespace ToDoList_netaspmvc.Models.Repo
@@ -64,6 +65,36 @@ namespace ToDoList_netaspmvc.Models.Repo
         public void UpdateNotification(Notification notification)
         {
             _context.Notification.Update(notification);
+        }
+
+        public void DeleteNotificationsForRecord(int recordID)
+        {
+            List<Notification> notifications = _context.Notification.Where(x => x.recordId == recordID).ToList();
+
+            if (notifications.Count > 0)
+            {
+                for (int i = 0; i < notifications.Count; i++)
+                {
+                    _context.Notification.Remove(notifications[i]);
+                }
+            }
+
+            _context.SaveChangesAsync();
+        }
+
+        public void DeleteNotificationsForList(int toDoListId)
+        {
+            List<Notification> notifications = _context.Notification.Where(x => x.toDoListId == toDoListId).ToList();
+
+            if (notifications.Count > 0)
+            {
+                for (int i = 0; i < notifications.Count; i++)
+                {
+                    _context.Notification.Remove(notifications[i]);
+                }
+            }
+
+            _context.SaveChangesAsync();
         }
     }
 }
