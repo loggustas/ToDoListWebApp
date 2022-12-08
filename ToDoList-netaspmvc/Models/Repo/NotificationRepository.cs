@@ -43,7 +43,18 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public List<Notification> GetNotificationsForList(int toDoListId)
         {
-            return _context.Notification.Where(x => x.toDoListId == toDoListId).ToList();
+            List<Notification> notificationList = _context.Notification.Where(x => x.toDoListId == toDoListId).ToList();
+            
+            for (int i = notificationList.Count - 1; i >= 0; i--)
+            {
+                var notificationDate = DateTime.ParseExact(notificationList[i].DueDate.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                if (DateTime.Today != notificationDate)
+                {
+                    notificationList.RemoveAt(i);
+                }
+            }
+            
+            return notificationList;
         }
 
         public void UpdateNotification(Notification notification)
@@ -51,16 +62,6 @@ namespace ToDoList_netaspmvc.Models.Repo
             _context.Notification.Update(notification);
         }
 
-        public bool AreThereNotificationsForList(int toDoListId)
-        {
-            if(this.GetNotificationsForList(toDoListId).Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        
     }
 }
