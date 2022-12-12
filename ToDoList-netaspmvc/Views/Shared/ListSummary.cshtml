@@ -1,6 +1,22 @@
 ﻿@using ToDoList_netaspmvc.Models.ViewModels
 @model ToDoListViewModel
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type ="text/javascript">
+    var clickId;
+    $("#deleteModal").on('show.bs.modal', function (event) {
+        $(event.currentTarget).find('asp-route-id').val(getId);
+        console.log(clickId)
+
+        var btn = $(this).find('#modalDeleteButton');
+        btn.attr('formaction', '/Home/DeleteList/' + this.clickId);
+    });
+
+    function getId(clicked_id) {
+        this.clickId = clicked_id;
+    }
+</script>
+
 <div class="card card-outline-primary m-1 p-1" style="background-color:#F5D7E3">
     <div class="bg-faded p-1">
         <h4>
@@ -8,11 +24,11 @@
             @{
                 if (Model.RecordCount == 1)
                 {
-                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount task</span>
+                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount task</span>
                 }
                 else
                 {
-                    <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount tasks</span>
+                                <span class="badge badge-pill badge-primary" style="float:right; background-color: #c26994">@Model.RecordCount tasks</span>
                 }
             }
         </h4>
@@ -27,13 +43,22 @@
             <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="buttonEdit" style="float:right">
                 Edit
             </a>
-            <a class="buttonDelete" data-toggle="modal" data-target="#deleteModal" style="float:right; color: #FFFFFF">
+            <a asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" asp-route-hideCompleted="@false" class="buttonDelete" style="float:right">
                 Delete
             </a>
-            <a asp-controller="Home" asp-action="Copy" asp-route-id="@Model.Id" class="buttonBack" style="float:right">
+            
+            <a class="buttonDelete buttonDeleteToModal" onclick="getId(@Model.Id)" data-id="@Model.Id" data-toggle="modal" data-target="#deleteModal" style="float:right; color: #FFFFFF">
+                Delete
+            </a>
+            
+            <!--
+                this worked normally, but for some reasson when I use modal it doesn;t work
+            <a asp-controller="Home" asp-action="Copy" asp-route-id="Model.Id" class="buttonBack" style="float:right">
                 Copy
             </a>
+            -->
         </span>
+        
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="background-color: #F5D7E3">
@@ -48,13 +73,18 @@
                     </div>
                     <div class="modal-footer">
                         <a class="button" data-dismiss="modal" style="color: #FFFFFF">Close</a>
-                        <a asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" asp-route-hideCompleted="@false" class="buttonDelete" style="float:right">
+                        @{
+                            Console.WriteLine(Model.Id);
+                            //even here it loops through all lists, but in the next the only value asp-route-id can get is the first list id
+                        }
+                        <a id="modalDeleteButton" asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" class="buttonDelete" style="float:right">
                             Delete
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+        
 
     </div>
 </div>
