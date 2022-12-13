@@ -71,11 +71,6 @@
             <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonEdit" style="float:right">
                 Edit
             </a>
-            <!--
-            <a class="buttonDelete" data-toggle="modal" data-target="#deleteModal" style="float:right; color: #FFFFFF">
-                Delete
-            </a>
-            -->
             <a class="buttonDelete buttonDeleteToModal" onclick="getId(@Model.Id)" data-id="@Model.Id" data-toggle="modal" data-target="@modalIdWithPrefix" style="float:right; color: #FFFFFF">
                 Delete
             </a>
