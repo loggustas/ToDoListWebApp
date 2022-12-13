@@ -45,11 +45,11 @@ namespace ToDoList_netaspmvc.Controllers
         //Post Home/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ToDoList list)
+        public IActionResult Create(ToDoList list)
         {
             if (ModelState.IsValid)
             {
-                int? result = await _toDoListRepository.AddToDoList(list);
+                int? result = _toDoListRepository.AddToDoList(list);
 
                 if (result != null)
                 {
@@ -74,20 +74,21 @@ namespace ToDoList_netaspmvc.Controllers
                 return NotFound();
             }
 
-            ViewData["ListToCopyID"] = id;
+            TempData["ListToCopyID"] = id;
 
             return View(listToCopy);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Copy(ToDoList list)
+        public IActionResult Copy(ToDoList list)
         {
             if (ModelState.IsValid)
             {
+                //int listToCopyId = (int)TempData["ListToCopyID"];
                 ToDoList toDoListCopy = new ToDoList { Id = 0, Name = list.Name, Description = list.Description };
 
-                int? result = await _toDoListRepository.AddToDoList(toDoListCopy);
+                int? result = _toDoListRepository.AddToDoList(toDoListCopy);
 
                 if (result != null)
                 {

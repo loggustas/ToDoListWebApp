@@ -13,7 +13,7 @@ namespace ToDoList_netaspmvc.Models.Repo
 
         public IQueryable<Record> records { get; }
 
-        public Task<int?> AddToDoList(ToDoList toDoList);
+        public int? AddToDoList(ToDoList toDoList);
 
         public Task<bool> AddRecord(Record record);
         public Task<bool> UpdateList(ToDoList toDoList);

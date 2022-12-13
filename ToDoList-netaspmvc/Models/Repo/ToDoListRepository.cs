@@ -40,7 +40,7 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
         }
 
-        public async Task<int?> AddToDoList(ToDoList toDoList)
+        public int? AddToDoList(ToDoList toDoList)
         {
             if (string.IsNullOrWhiteSpace(toDoList.Description))
             {
@@ -48,9 +48,11 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
 
             toDoContext.ToDoList.Add(toDoList);
-            await toDoContext.SaveChangesAsync();
+            toDoContext.SaveChanges();
+            List<ToDoList> list = toDoContext.ToDoList.ToList();
+            list.Reverse();
 
-            return toDoContext.ToDoList.FirstOrDefault(x => x.Name.Equals(toDoList.Name) && x.Description.Equals(toDoList.Description))?.Id;
+            return list.FirstOrDefault(x => x.Name.Equals(toDoList.Name))?.Id;
         }
 
         public List<Record> GetAllRecords(int toDoListId)

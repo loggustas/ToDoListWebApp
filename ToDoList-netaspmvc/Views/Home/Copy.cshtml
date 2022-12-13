@@ -1,7 +1,7 @@
 ﻿@model ToDoList_DomainModel.Models.ToDoList
 
 @{
-    int listToCopyId = (int)ViewData["ListToCopyID"];
+    int listToCopyId = (int)TempData["ListToCopyID"];
 }
 
 <h1>Copy</h1>
@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Copy">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@listToCopyId" />
+            <input type="hidden" asp-for="Id" value="@listToCopyId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
