@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoList_netaspmvc.Models;
+using ToDoList_DomainModel.Models;
+using ToDoList_DomainModel.ViewModels;
 using ToDoList_netaspmvc.Models.Repo;
-using ToDoList_netaspmvc.Models.ViewModels;
 
 namespace ToDoList_netaspmvc.Controllers
 {

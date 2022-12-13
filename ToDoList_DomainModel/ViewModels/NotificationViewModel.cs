@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ToDoList_netaspmvc.Models.ViewModels
+namespace ToDoList_DomainModel.ViewModels
 {
     public class NotificationViewModel
     {

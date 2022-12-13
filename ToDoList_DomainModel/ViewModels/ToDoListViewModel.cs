@@ -1,4 +1,6 @@
-﻿namespace ToDoList_netaspmvc.Models.ViewModels
+﻿using ToDoList_DomainModel.Models;
+
+namespace ToDoList_DomainModel.ViewModels
 {
     public class ToDoListViewModel
     {

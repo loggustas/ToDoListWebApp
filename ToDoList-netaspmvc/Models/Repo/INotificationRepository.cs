@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ToDoList_DomainModel.Models;
 
 namespace ToDoList_netaspmvc.Models.Repo
 {

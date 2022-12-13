@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ToDoList_netaspmvc.Models
+namespace ToDoList_DomainModel.Models
 {
     public class ToDoList
     {

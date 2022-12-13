@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ToDoList_netaspmvc.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ToDoList_DomainModel.Models;
 
 namespace ToDoList_netaspmvc.Infrastructure
 {

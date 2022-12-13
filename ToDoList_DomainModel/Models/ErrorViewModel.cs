@@ -1,6 +1,6 @@
 using System;
 
-namespace ToDoList_netaspmvc.Models
+namespace ToDoList_DomainModel.Models
 {
     public class ErrorViewModel
     {

@@ -1,6 +1,6 @@
-﻿using ToDoList_netaspmvc.Models.ViewModels;
+﻿using ToDoList_DomainModel.ViewModels;
 
-namespace ToDoList_netaspmvc.Models
+namespace ToDoList_DomainModel.Models
 {
     public class Notification
     {
