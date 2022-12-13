@@ -74,8 +74,6 @@ namespace ToDoList_netaspmvc.Controllers
                 return NotFound();
             }
 
-            TempData["ListToCopyID"] = id;
-
             return View(listToCopy);
         }
 
@@ -85,7 +83,6 @@ namespace ToDoList_netaspmvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                //int listToCopyId = (int)TempData["ListToCopyID"];
                 ToDoList toDoListCopy = new ToDoList { Id = 0, Name = list.Name, Description = list.Description };
 
                 int? result = _toDoListRepository.AddToDoList(toDoListCopy);
