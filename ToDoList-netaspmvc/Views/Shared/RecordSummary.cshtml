@@ -1,10 +1,29 @@
 ﻿@using System.Globalization
+@using ToDoList_DomainModel.Models
 @model Record
 
 @{
     bool hideCompleted = (bool)TempData["hideCompleted"];
     bool showDueToday = (bool)TempData["showDueToday"];
+    string modalIdWithPrefix = "#deleteModal" + Model.Id;
+    string modalId = "deleteModal" + Model.Id;
 }
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+    var clickId;
+    $(@modalIdWithPrefix).on('show.bs.modal', function (event) {
+        $(event.currentTarget).find('asp-route-id').val(getId);
+        console.log(clickId)
+
+        var btn = $(this).find('#modalDeleteButton');
+        btn.attr('formaction', '/List/DeleteRecord/' + this.clickId);
+    });
+
+    function getId(clicked_id) {
+        this.clickId = clicked_id;
+    }
+</script>
 
 <div class="card card-outline-primary m-1 p-1" style="background-color: #F5D7E3">
     <div class="bg-faded p-1">
@@ -52,14 +71,19 @@
             <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonEdit" style="float:right">
                 Edit
             </a>
+            <!--
             <a class="buttonDelete" data-toggle="modal" data-target="#deleteModal" style="float:right; color: #FFFFFF">
+                Delete
+            </a>
+            -->
+            <a class="buttonDelete buttonDeleteToModal" onclick="getId(@Model.Id)" data-id="@Model.Id" data-toggle="modal" data-target="@modalIdWithPrefix" style="float:right; color: #FFFFFF">
                 Delete
             </a>
             <a asp-controller="List" asp-action="CreateNotification" asp-route-recordId="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonBack" style="float:right">
                 Create reminder
             </a>
         </span>
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="@modalId" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="background-color: #F5D7E3">
                     <div class="modal-header">
