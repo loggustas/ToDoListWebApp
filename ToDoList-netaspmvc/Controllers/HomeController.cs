@@ -12,7 +12,7 @@ namespace ToDoList_netaspmvc.Controllers
 {
     public class HomeController : Controller
     {
-        private IToDoListRepository _toDoListRepository;
+        private readonly IToDoListRepository _toDoListRepository;
         
         private readonly INotificationRepository _notificationRepository;
 
