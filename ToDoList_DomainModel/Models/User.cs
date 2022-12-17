@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using ToDoList_DomainModel.ViewModels;
+using BC = BCrypt.Net.BCrypt;
 
 namespace ToDoList_DomainModel.Models
 {
     public class User
     {
+        public User(string username, string password)
+        {
+            Username = username;
+            Password = BC.HashPassword(password);
+            IsAdmin = false;
+        }
         [Key]
         public int Id { get; set; }
 

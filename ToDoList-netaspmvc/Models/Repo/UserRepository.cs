@@ -15,7 +15,7 @@ namespace ToDoList_netaspmvc.Models.Repo
         }
         public bool RegisterUser(RegisterViewModel registerViewModel)
         {
-            User user = new User(registerViewModel);
+            User user = new User(registerViewModel.Username, registerViewModel.Password);
 
             _context.Users.Add(user);
             int result = _context.SaveChanges();
