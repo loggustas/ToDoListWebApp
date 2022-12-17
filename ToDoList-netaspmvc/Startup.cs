@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,8 @@ namespace ToDoList_netaspmvc
             services.AddDbContext<ToDoContext>(options => options.UseSqlServer
             (Configuration.GetConnectionString("ToDoContext")));  //sitas pridetas is g
 
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ToDoContext>();
+
             services.AddDistributedMemoryCache();
             services.AddSession();
         }
@@ -49,6 +52,8 @@ namespace ToDoList_netaspmvc
             app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthentication();
             app.UseSession();
             app.UseRouting();
 
