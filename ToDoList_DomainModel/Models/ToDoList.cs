@@ -9,6 +9,8 @@ namespace ToDoList_DomainModel.Models
     {
         public int Id { get; set; }
 
+        public int UserId { get; set; }
+
         [StringLength(50, MinimumLength = 2)]
         [Required]
         public string Name { get; set; }

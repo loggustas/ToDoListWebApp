@@ -20,10 +20,5 @@ namespace ToDoList_DomainModel.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
-
-        [Required(ErrorMessage = "Email is required.")]
-        [Display(Name = "Email Adress")]
-        [EmailAddress]
-        public string EmailAddress { get; set; }
     }
 }
