@@ -42,9 +42,8 @@ namespace ToDoList_netaspmvc.Controllers
                     {
                         TempData["Error"] = "Some error occured while registering the user.";
                     }
+                    return RedirectToAction("MainPage", "Home");
                 }
-
-                return RedirectToAction("MainPage");
             }
 
             return View();
