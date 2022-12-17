@@ -23,6 +23,11 @@ namespace ToDoList_netaspmvc.Controllers
             _notificationRepository = notificationRepository;
         }
 
+        public IActionResult MainPage()
+        {
+            return View();
+        }
+
         public async Task<ActionResult> Index()
         {
             List<ToDoList> lists = await _toDoListRepository.toDoLists.OrderBy(x => x.Id).ToListAsync();
