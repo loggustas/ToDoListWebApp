@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ToDoList_DomainModel.Models;
 
 namespace ToDoList_netaspmvc.Infrastructure
 {
-    public class ToDoContext : IdentityDbContext
+    public class ToDoContext : DbContext
     {
         public ToDoContext(DbContextOptions<ToDoContext> options)
             : base(options)
@@ -14,5 +13,6 @@ namespace ToDoList_netaspmvc.Infrastructure
         public DbSet<ToDoList> ToDoList { get; set; }
         public DbSet<Record> Record { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
