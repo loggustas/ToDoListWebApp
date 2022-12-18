@@ -10,6 +10,8 @@ namespace ToDoList_DomainModel
         public static int? Id { get; set; }
         public static string Username { get; set; }
 
+        public static bool isAdmin { get; set; }
+
         public static void Login(int id, string username)
         {
             Id = id;
