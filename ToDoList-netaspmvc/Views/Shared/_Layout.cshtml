@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ToDoList_DomainModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -205,6 +206,9 @@
     </style>
 </head>
 <body class="border-bottom-0" style="background-color: #F4A5AE">
+    @{
+        bool userLoggedIn = CurrentUser.Id != null;
+    }
     <header style="background-color: #A8577E">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #bd4855">
             <div class="container">
@@ -218,12 +222,25 @@
                         <li class="nav-item">
                             <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Register">Register</a>
                         </li>
+                        @{
+                            if(userLoggedIn)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Loggout">Log out</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Login">Log in</a>
+                                </li>
+                            }
+                        }
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" style="color: black" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        
+                        </li>                        
                     </ul>
                     
                 </div>

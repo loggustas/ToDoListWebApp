@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList_DomainModel;
 using ToDoList_DomainModel.ViewModels;
 using ToDoList_netaspmvc.Infrastructure;
 using ToDoList_netaspmvc.Models.Repo;
@@ -42,7 +43,7 @@ namespace ToDoList_netaspmvc.Controllers
                     {
                         TempData["Error"] = "Some error occured while registering the user.";
                     }
-                    return RedirectToAction("MainPage", "Home");
+                    return RedirectToAction("Login");
                 }
             }
 
@@ -68,11 +69,19 @@ namespace ToDoList_netaspmvc.Controllers
                 else
                 {
                     TempData["Success"] = "Logged in.";
+                    CurrentUser.Login(UserId.Value, loginViewModel.Username);
                     return RedirectToAction("Index", "Home");
                 }
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Loggout()
+        {
+            CurrentUser.Logout();
+            return RedirectToAction("Login");
         }
     }
 }
