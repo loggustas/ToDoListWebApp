@@ -1,31 +1,36 @@
-﻿@model ToDoList_DomainModel.ViewModels.LoginViewModel
-
+﻿@using ToDoList_DomainModel
+@model ToDoList_DomainModel.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    if (CurrentUser.Id == null)
+    {
+        <h1 style="text-align:center">Login</h1>
+
+        <div class="row" style="text-align: center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <form asp-action="Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" value="Login" class="buttonb">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+
+        </div>
+    }
+    else
+    {
+        <h1 style="text-align:center">You are already logged in.</h1>
+    }
 }
-
-<h1 style="text-align:center">Login</h1>
-
-<div class="row" style="text-align: center">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <button type="submit" value="Login" class="buttonb">Login</button>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-4"></div>
-
-</div>

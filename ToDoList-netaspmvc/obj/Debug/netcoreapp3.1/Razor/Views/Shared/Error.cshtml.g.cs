@@ -21,13 +21,13 @@ using ToDoList_netaspmvc;
 #nullable disable
 #nullable restore
 #line 2 "C:\Users\Gustas\source\repos\aspnet-core-final-project\ToDoList-netaspmvc\Views\_ViewImports.cshtml"
-using ToDoList_netaspmvc.Models;
+using ToDoList_DomainModel.Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d6a5625cc8fb4476f348b0fe9041c550465d8bf9", @"/Views/Shared/Error.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ab3369f0599cf2cd0adf32cbe81cc0683774cd23", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"fd19df5e8958ab1fe1b10f587c8047400e208c33", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Shared_Error : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ErrorViewModel>
     #nullable disable

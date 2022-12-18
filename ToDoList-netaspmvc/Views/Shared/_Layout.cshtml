@@ -211,7 +211,6 @@
     }
     <header style="background-color: #A8577E">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #bd4855">
-            <div class="container">
                 <span class="navbar-brand" style="color: black">To do list application</span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -219,12 +218,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Register">Register</a>
-                        </li>
                         @{
                             if(userLoggedIn)
                             {
+
                                 <li class="nav-item">
                                     <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Loggout">Log out</a>
                                 </li>
@@ -232,19 +229,26 @@
                             else
                             {
                                 <li class="nav-item">
+                                    <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Register">Register</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" style="color: black" asp-area="" asp-controller="User" asp-action="Login">Log in</a>
                                 </li>
                             }
                         }
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: black" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>                        
+                        @{
+                            if(userLoggedIn)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" style="color: black" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li> 
+                            }
+                        }                  
                     </ul>
                     
                 </div>
-            </div>
         </nav>
     </header>
     <div class="container">
