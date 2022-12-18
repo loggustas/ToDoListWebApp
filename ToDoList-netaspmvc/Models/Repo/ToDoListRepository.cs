@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -179,6 +180,11 @@ namespace ToDoList_netaspmvc.Models.Repo
         public int CountToDoListEntries(int toDoListId)
         {
             return toDoContext.Record.Count(x => x.toDoListID == toDoListId);
+        }
+
+        public async Task<List<ToDoList>> GetUserLists(int id)
+        {
+            return await toDoContext.ToDoList.Where(x => x.UserId == id).OrderBy(x => x.Id).ToListAsync();
         }
     }
 }

@@ -35,5 +35,6 @@ namespace ToDoList_netaspmvc.Models.Repo
         public void CopyRecord(Record record, int ListIdCopyTo);
 
         public int CountToDoListEntries(int toDoListId);
+        public Task<List<ToDoList>> GetUserLists(int id);
     }
 }
