@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using ToDoList_DomainModel.Models;
 using ToDoList_DomainModel.ViewModels;
+using ToDoList_netaspmvc.Helpers;
 using ToDoList_netaspmvc.Infrastructure;
 
 namespace ToDoList_netaspmvc.Models.Repo
@@ -15,7 +17,7 @@ namespace ToDoList_netaspmvc.Models.Repo
         }
         public bool RegisterUser(RegisterViewModel registerViewModel)
         {
-            User user = new User(registerViewModel.Username, registerViewModel.Password);
+            User user = new User(registerViewModel.Username, PasswordHasher.Hash(registerViewModel.Password));
 
             _context.Users.Add(user);
             int result = _context.SaveChanges();
@@ -38,6 +40,22 @@ namespace ToDoList_netaspmvc.Models.Repo
             }
 
             return true;
+        }
+
+        public int? VerifyUser(string username, string password)
+        {
+            User user = _context.Users.FirstOrDefault(x => x.Username == username);
+            if (user == null)
+            {
+                return null;
+            }
+            
+            if (PasswordHasher.Verify(password, user.Password))
+            {
+                return user.Id;
+            }
+
+            return null;
         }
     }
 }

@@ -7,5 +7,7 @@ namespace ToDoList_netaspmvc.Models.Repo
         public bool RegisterUser(RegisterViewModel registerViewModel);
 
         public bool UsernameExists(string username);
+
+        public int? VerifyUser(string username, string password);
     }
 }

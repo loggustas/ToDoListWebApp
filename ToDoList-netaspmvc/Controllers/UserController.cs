@@ -48,5 +48,31 @@ namespace ToDoList_netaspmvc.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                int? UserId = userRepository.VerifyUser(loginViewModel.Username, loginViewModel.Password);
+                if (UserId == null)
+                {
+                    TempData["Error"] = "Incorrect account details!";
+                }
+                else
+                {
+                    TempData["Success"] = "Logged in.";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            return View();
+        }
     }
 }
