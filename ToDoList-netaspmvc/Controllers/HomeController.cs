@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ToDoList_DomainModel;
 using ToDoList_DomainModel.Models;
 using ToDoList_DomainModel.ViewModels;
 using ToDoList_netaspmvc.Models.Repo;
@@ -23,28 +24,31 @@ namespace ToDoList_netaspmvc.Controllers
             _notificationRepository = notificationRepository;
         }
 
-        public IActionResult MainPage()
-        {
-            return View();
-        }
-
         public async Task<ActionResult> Index()
         {
-            List<ToDoList> lists = await _toDoListRepository.toDoLists.OrderBy(x => x.Id).ToListAsync();
-
-            List<ToDoListViewModel> modelListView = new List<ToDoListViewModel>();
-
-            foreach (ToDoList list in lists)
+            if (CurrentUser.Id != null)
             {
-                modelListView.Add(new ToDoListViewModel(list, _toDoListRepository.CountToDoListEntries(list.Id)));
-            }
+                List<ToDoList> lists = await _toDoListRepository.GetUserLists(CurrentUser.Id.Value);
 
-            return View(modelListView);  
+                List<ToDoListViewModel> modelListView = new List<ToDoListViewModel>();
+
+                foreach (ToDoList list in lists)
+                {
+                    modelListView.Add(new ToDoListViewModel(list, _toDoListRepository.CountToDoListEntries(list.Id)));
+                }
+
+                return View(modelListView);
+            }
+            return NotFound();
         }
 
         public IActionResult Create()
         {
-            return View();
+            if(CurrentUser.Id != null)
+            {
+                return View();
+            }
+            return NotFound();
         }
 
         //Post Home/Create
@@ -52,72 +56,89 @@ namespace ToDoList_netaspmvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ToDoList list)
         {
-            if (ModelState.IsValid)
+            if (CurrentUser.Id != null)
             {
-                int? result = _toDoListRepository.AddToDoList(list);
-
-                if (result != null)
+                if (ModelState.IsValid)
                 {
-                    TempData["Success"] = "The list has been added!";
-                }
-                else
-                {
-                    TempData["Error"] = "Something went wrong while Editting list.";
+                    list.UserId = CurrentUser.Id.Value;
+                    int? result = _toDoListRepository.AddToDoList(list);
+
+                    if (result != null)
+                    {
+                        TempData["Success"] = "The list has been added!";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Something went wrong while Editting list.";
+                    }
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
+                return View(list);
             }
-
-            return View(list);
+            return NotFound();
         }
 
         public async Task<ActionResult> Copy(int id)
         {
-            ToDoList listToCopy = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
-            if(listToCopy == null)
+            if (CurrentUser.Id != null)
             {
-                return NotFound();
-            }
+                ToDoList listToCopy = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+                if (listToCopy == null)
+                {
+                    return NotFound();
+                }
 
-            return View(listToCopy);
+                return View(listToCopy);
+            }
+            return NotFound();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Copy(ToDoList list)
         {
-            if (ModelState.IsValid)
+            if (CurrentUser.Id != null)
             {
-                ToDoList toDoListCopy = new ToDoList { Id = 0, Name = list.Name, Description = list.Description };
-
-                int? result = _toDoListRepository.AddToDoList(toDoListCopy);
-
-                if (result != null)
+                if (ModelState.IsValid)
                 {
-                    TempData["Success"] = "The list has been copied!";
-                    _toDoListRepository.CopyList(list.Id, result.Value);
-                }
-                else
-                {
-                    TempData["Error"] = "Something went wrong while Copying list.";
+                    ToDoList toDoListCopy = new ToDoList { Id = 0, UserId = list.UserId, Name = list.Name, Description = list.Description };
+
+                    int? result = _toDoListRepository.AddToDoList(toDoListCopy);
+
+                    if (result != null)
+                    {
+                        TempData["Success"] = "The list has been copied!";
+                        _toDoListRepository.CopyList(list.Id, result.Value);
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Something went wrong while Copying list.";
+                    }
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
+                return View(list);
             }
-
-            return View(list);
+            return NotFound();
         }
 
         //Get /home/edit/{id}
         public async Task<ActionResult> Edit(int id)
         {
-            ToDoList list = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
-            if(list == null)
+            if (CurrentUser.Id != null)
             {
-                return NotFound();
-            }
+                ToDoList list = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+                if (list == null)
+                {
+                    return NotFound();
+                }
 
-            return View(list);
+                return View(list);
+            }
+            return NotFound();
         }
 
         //Post home/edit/{id}
@@ -125,43 +146,51 @@ namespace ToDoList_netaspmvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ToDoList list)
         {
-            if (ModelState.IsValid)
+            if (CurrentUser.Id != null)
             {
-                bool result = await _toDoListRepository.UpdateList(list);
-
-                if (result)
+                if (ModelState.IsValid)
                 {
-                    TempData["Success"] = "The list has been updated!";
-                }
-                else
-                {
-                    TempData["Error"] = "Something went wrong while Editting list.";
+                    bool result = await _toDoListRepository.UpdateList(list);
+
+                    if (result)
+                    {
+                        TempData["Success"] = "The list has been updated!";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Something went wrong while Editting list.";
+                    }
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
+                return View(list);
             }
-
-            return View(list);
+            return NotFound();
         }
 
         public async Task<ActionResult> DeleteList(int id)
         {
-            if (ModelState.IsValid)
+            if (CurrentUser.Id != null)
             {
-                _notificationRepository.DeleteNotificationsForList(id);
-                bool result = await _toDoListRepository.DeleteList(id);
+                if (ModelState.IsValid)
+                {
+                    _notificationRepository.DeleteNotificationsForList(id);
+                    bool result = await _toDoListRepository.DeleteList(id);
 
-                if (result)
-                {
-                    TempData["Success"] = "The list has been deleted!";
+                    if (result)
+                    {
+                        TempData["Success"] = "The list has been deleted!";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Something went wrong while deleting the list.";
+                    }
                 }
-                else
-                {
-                    TempData["Error"] = "Something went wrong while deleting the list.";
-                }
+
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("Index");
+            return NotFound();
         }
 
 
