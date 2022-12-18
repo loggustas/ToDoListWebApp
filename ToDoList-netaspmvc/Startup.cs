@@ -59,7 +59,7 @@ namespace ToDoList_netaspmvc
             app.UseEndpoints(endpoints =>
             {                
                 endpoints.MapControllerRoute("default", "{controller}/{action}/{id?}",
-                    new { Controller = "Home", action = "MainPage" });
+                    new { Controller = "User", action = "Login" });
 
                 endpoints.MapDefaultControllerRoute();                
             });
