@@ -39,7 +39,7 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(modelListView);
             }
-            return NotFound();
+            return View("NoUser");
         }
 
         public IActionResult Create()
@@ -48,7 +48,7 @@ namespace ToDoList_netaspmvc.Controllers
             {
                 return View();
             }
-            return NotFound();
+            return View("NoUser");
         }
 
         //Post Home/Create
@@ -92,7 +92,7 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(listToCopy);
             }
-            return NotFound();
+            return View("NoUser");
         }
 
         [HttpPost]
@@ -138,7 +138,7 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(list);
             }
-            return NotFound();
+            return View("NoUser");
         }
 
         //Post home/edit/{id}
@@ -190,9 +190,13 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return RedirectToAction("Index");
             }
-            return NotFound();
+            return View("NoUser");
         }
 
+        public IActionResult NoUser()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
