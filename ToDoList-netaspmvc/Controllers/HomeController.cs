@@ -39,7 +39,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(modelListView);
             }
-            return View("NoUser");
+            //return View("NoUser");
+            return NotFound();
         }
 
         public IActionResult Create()
@@ -48,7 +49,8 @@ namespace ToDoList_netaspmvc.Controllers
             {
                 return View();
             }
-            return View("NoUser");
+            //return View("NoUser");
+            return NotFound();
         }
 
         //Post Home/Create
@@ -92,7 +94,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(listToCopy);
             }
-            return View("NoUser");
+            //return View("NoUser");
+            return NotFound();
         }
 
         [HttpPost]
@@ -138,7 +141,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(list);
             }
-            return View("NoUser");
+            //return View("NoUser");
+            return NotFound();
         }
 
         //Post home/edit/{id}
@@ -175,6 +179,12 @@ namespace ToDoList_netaspmvc.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    ToDoList list = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+                    if (list == null)
+                    {
+                        return NotFound();
+                    }
+
                     _notificationRepository.DeleteNotificationsForList(id);
                     bool result = await _toDoListRepository.DeleteList(id);
 
@@ -190,7 +200,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View("NoUser");
+            //return View("NoUser");
+            return NotFound();
         }
 
         public IActionResult NoUser()

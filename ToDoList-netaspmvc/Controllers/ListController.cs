@@ -74,7 +74,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(records);
             }
-            return RedirectToAction("NoUser", "Home");
+            //return RedirectToAction("NoUser", "Home");
+            return NotFound();
         }
 
         public IActionResult Create(int id, bool hideCompletedAfter, bool showDueTodayAfter)
@@ -88,7 +89,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View();
             }
-            return RedirectToAction("NoUser", "Home");
+            //return RedirectToAction("NoUser", "Home");
+            return NotFound();
         }
 
         //Post Home/Create
@@ -146,7 +148,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(notificationViewModel);
             }
-            return RedirectToAction("NoUser", "Home");
+            //return RedirectToAction("NoUser", "Home");
+            return NotFound();
         }
 
         [HttpPost]
@@ -199,7 +202,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(record);
             }
-            return RedirectToAction("NoUser", "Home");
+            //return RedirectToAction("NoUser", "Home");
+            return NotFound();
         }
 
         public async Task<ActionResult> EditRecord(int id, bool hideCompletedAfter, bool showDueTodayAfter)
@@ -219,7 +223,8 @@ namespace ToDoList_netaspmvc.Controllers
 
                 return View(recordViewModel);
             }
-            return RedirectToAction("NoUser", "Home");
+            //return RedirectToAction("NoUser", "Home");
+            return NotFound();
         }
 
         //Post home/edit/{id}
@@ -284,7 +289,8 @@ namespace ToDoList_netaspmvc.Controllers
                     showDueToday = showDueTodayAfter,
                 });
             }
-            return RedirectToAction("NoUser", "Home");
+            //return RedirectToAction("NoUser", "Home");
+            return NotFound();
         }
     }
 }
