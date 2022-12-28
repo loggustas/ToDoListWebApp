@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList-netaspmvc", "ToDoList-netaspmvc.csproj", "{12928408-9900-4413-A5AF-154906454E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList-netaspmvc", ".\ToDoList-netaspmvc\ToDoList-netaspmvc.csproj", "{12928408-9900-4413-A5AF-154906454E32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList_DomainModel", "..\ToDoList_DomainModel\ToDoList_DomainModel.csproj", "{B39994E0-2067-47B2-A800-B2E7A15C8168}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList_DomainModel", ".\ToDoList_DomainModel\ToDoList_DomainModel.csproj", "{B39994E0-2067-47B2-A800-B2E7A15C8168}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.IntegrationTests", "..\ToDoList.IntegrationTests\ToDoList.IntegrationTests.csproj", "{EC3E2763-0569-4FD3-A597-34C4BA3CBFB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.IntegrationTests", ".\ToDoList.IntegrationTests\ToDoList.IntegrationTests.csproj", "{EC3E2763-0569-4FD3-A597-34C4BA3CBFB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
