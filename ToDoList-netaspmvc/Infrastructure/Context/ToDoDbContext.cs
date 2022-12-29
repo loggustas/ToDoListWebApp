@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoList_DomainModel.Models;
 
-namespace ToDoList_netaspmvc.Infrastructure
+namespace ToDoList_netaspmvc.Infrastructure.Context
 {
-    public class ToDoContext : DbContext
+    public class ToDoDbContext : DbContext
     {
-        public ToDoContext(DbContextOptions<ToDoContext> options)
+        public ToDoDbContext(DbContextOptions<ToDoDbContext> options)
             : base(options)
         {
         }

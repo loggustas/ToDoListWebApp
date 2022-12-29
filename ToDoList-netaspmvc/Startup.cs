@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ToDoList_netaspmvc.Infrastructure;
+using ToDoList_netaspmvc.Infrastructure.Context;
 using ToDoList_netaspmvc.Models;
 using ToDoList_netaspmvc.Models.Repo;
 
@@ -27,7 +27,7 @@ namespace ToDoList_netaspmvc
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddDbContext<ToDoContext>(options => options.UseSqlServer
+            services.AddDbContext<ToDoDbContext>(options => options.UseSqlServer
             (Configuration.GetConnectionString("ToDoContext")));  //sitas pridetas is g
 
             services.AddDistributedMemoryCache();

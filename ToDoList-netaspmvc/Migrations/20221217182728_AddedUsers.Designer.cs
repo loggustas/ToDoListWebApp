@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ToDoList_netaspmvc.Infrastructure;
+using ToDoList_netaspmvc.Infrastructure.Context;
 
 namespace ToDoList_netaspmvc.Migrations
 {
-    [DbContext(typeof(ToDoContext))]
+    [DbContext(typeof(ToDoDbContext))]
     [Migration("20221217182728_AddedUsers")]
     partial class AddedUsers
     {

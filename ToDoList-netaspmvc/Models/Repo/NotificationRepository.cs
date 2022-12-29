@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using ToDoList_DomainModel.Models;
-using ToDoList_netaspmvc.Infrastructure;
+using ToDoList_netaspmvc.Infrastructure.Context;
 
 namespace ToDoList_netaspmvc.Models.Repo
 {
     public class NotificationRepository : INotificationRepository
     {
-        private ToDoContext _context { get; }
+        private ToDoDbContext _context { get; }
 
-        public NotificationRepository(ToDoContext context)
+        public NotificationRepository(ToDoDbContext context)
         {
             _context = context;
         }

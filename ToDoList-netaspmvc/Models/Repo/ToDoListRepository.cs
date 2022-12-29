@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoList_DomainModel.Models;
-using ToDoList_netaspmvc.Infrastructure;
+using ToDoList_netaspmvc.Infrastructure.Context;
 
 namespace ToDoList_netaspmvc.Models.Repo
 {
     public class ToDoListRepository : IToDoListRepository
     {
-        private readonly ToDoContext toDoContext;
+        private readonly ToDoDbContext toDoContext;
 
-        public ToDoListRepository(ToDoContext ctx)
+        public ToDoListRepository(ToDoDbContext ctx)
         {
             this.toDoContext = ctx;
         }

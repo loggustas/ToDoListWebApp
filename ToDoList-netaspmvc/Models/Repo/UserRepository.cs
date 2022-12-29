@@ -3,15 +3,15 @@ using System.Linq;
 using ToDoList_DomainModel.Models;
 using ToDoList_DomainModel.ViewModels;
 using ToDoList_netaspmvc.Helpers;
-using ToDoList_netaspmvc.Infrastructure;
+using ToDoList_netaspmvc.Infrastructure.Context;
 
 namespace ToDoList_netaspmvc.Models.Repo
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ToDoContext _context;
+        private readonly ToDoDbContext _context;
 
-        public UserRepository(ToDoContext context)
+        public UserRepository(ToDoDbContext context)
         {
             _context = context;
         }
