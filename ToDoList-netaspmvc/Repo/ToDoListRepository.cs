@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ToDoList_DomainModel.Models;
 using ToDoList_netaspmvc.Infrastructure.Context;
 
-namespace ToDoList_netaspmvc.Models.Repo
+namespace ToDoList_netaspmvc.Repo
 {
     public class ToDoListRepository : IToDoListRepository
     {

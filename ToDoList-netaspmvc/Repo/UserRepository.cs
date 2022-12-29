@@ -5,7 +5,7 @@ using ToDoList_DomainModel.ViewModels;
 using ToDoList_netaspmvc.Helpers;
 using ToDoList_netaspmvc.Infrastructure.Context;
 
-namespace ToDoList_netaspmvc.Models.Repo
+namespace ToDoList_netaspmvc.Repo
 {
     public class UserRepository : IUserRepository
     {

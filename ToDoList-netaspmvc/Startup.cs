@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ToDoList_netaspmvc.Infrastructure.Context;
-using ToDoList_netaspmvc.Models;
-using ToDoList_netaspmvc.Models.Repo;
+using ToDoList_netaspmvc.Repo;
 
 namespace ToDoList_netaspmvc
 {

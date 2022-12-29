@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ToDoList_DomainModel.Models;
 
-namespace ToDoList_netaspmvc.Models.Repo
+namespace ToDoList_netaspmvc.Repo
 {
     public interface IToDoListRepository
     {

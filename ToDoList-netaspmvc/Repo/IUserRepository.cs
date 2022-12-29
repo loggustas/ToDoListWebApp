@@ -1,6 +1,6 @@
 ﻿using ToDoList_DomainModel.ViewModels;
 
-namespace ToDoList_netaspmvc.Models.Repo
+namespace ToDoList_netaspmvc.Repo
 {
     public interface IUserRepository
     {
