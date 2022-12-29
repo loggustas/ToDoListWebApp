@@ -27,7 +27,7 @@ namespace ToDoList_netaspmvc
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddDbContext<ToDoDbContext>(options => options.UseSqlServer
-            (Configuration.GetConnectionString("ToDoContext")));  //sitas pridetas is g
+            (Configuration.GetConnectionString("ToDoContext")));
 
             services.AddDistributedMemoryCache();
             services.AddSession();
