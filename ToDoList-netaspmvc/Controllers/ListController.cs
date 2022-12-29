@@ -1,296 +1,222 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoList_DomainModel.ViewModels;
-using ToDoList_DomainModel.Models;
-using ToDoList_netaspmvc.Repo;
 using ToDoList_DomainModel;
+using ToDoList_DomainModel.Models;
+using ToDoList_DomainModel.ViewModels;
+using ToDoList_netaspmvc.Repo;
 
 namespace ToDoList_netaspmvc.Controllers
 {
-	public class ListController : Controller
-	{
-		private readonly IToDoListRepository _repository;
+    public class ListController : Controller
+    {
+        private readonly IToDoListRepository _toDoListRepository;
         
         private readonly INotificationRepository _notificationRepository;
 
-		public ListController(IToDoListRepository repository, INotificationRepository notificationRepository)
-		{
-			_repository = repository;
+
+        public ListController(IToDoListRepository repo, INotificationRepository notificationRepository)
+        {
+            _toDoListRepository = repo;
             _notificationRepository = notificationRepository;
-		}
+        }
 
-		public IActionResult Index(int id, bool hideCompleted, bool showDueToday)
-		{
-            if(CurrentUser.Id != null)
+        public async Task<ActionResult> Index()
+        {
+            if (CurrentUser.Id != null)
             {
-                ViewData["ListIDView"] = id;
-                TempData["hideCompleted"] = hideCompleted;
-                TempData["showDueToday"] = showDueToday;
+                List<ToDoList> lists = await _toDoListRepository.GetUserLists(CurrentUser.Id.Value);
 
-                List<Record> records = _repository.GetAllRecords(id);
+                List<ToDoListViewModel> modelListView = new List<ToDoListViewModel>();
 
-                ViewData["recordCount"] = records.Count;
-
-                bool isListEmpty = records.Count == 0;
-                ViewData["isListEmpty"] = isListEmpty;
-
-                List<Notification> notificationList = _notificationRepository.GetNotificationsForList(id);
-                TempData["notificationList"] = notificationList;
-
-                if (hideCompleted)
+                foreach (ToDoList list in lists)
                 {
-                    records = records.Where(x => !x.Status.Equals("Completed")).ToList();
-                }
-                if (showDueToday)
-                {
-                    for (int i = records.Count - 1; i >= 0; i--)
-                    {
-                        var recordDate = DateTime.ParseExact(records[i].DueDate.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                        var todayDate = DateTime.Today;
-
-                        if (recordDate != todayDate)
-                        {
-                            records.RemoveAt(i);
-                        }
-                    }
+                    modelListView.Add(new ToDoListViewModel(list, _toDoListRepository.CountToDoListEntries(list.Id)));
                 }
 
-                string name = _repository.GetList(id)?.Name;
-                if (name == null)
+                if (modelListView.Count == 0)
                 {
-                    ViewData["ListName"] = "There is no such list with this id.";
-                    ViewData["ListExists"] = false;
+                    ViewData["NoLists"] = true;
                 }
                 else
                 {
-                    ViewData["ListName"] = name;
-                    ViewData["ListExists"] = true;
+                    ViewData["NoLists"] = false;
                 }
 
-                return View(records);
+                return View(modelListView);
             }
-            //return RedirectToAction("NoUser", "Home");
             return NotFound();
         }
 
-        public IActionResult Create(int id, bool hideCompletedAfter, bool showDueTodayAfter)
+        public IActionResult Create()
         {
             if(CurrentUser.Id != null)
             {
-                ViewData["ListIDCreate"] = id;
-                ViewData["ListName"] = _repository.toDoLists.FirstOrDefault(x => x.Id == id)?.Name;
-                ViewData["hideCompletedAfter"] = hideCompletedAfter;
-                ViewData["showDueTodayAfter"] = showDueTodayAfter;
-
                 return View();
             }
-            //return RedirectToAction("NoUser", "Home");
             return NotFound();
         }
 
         //Post Home/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RecordViewModel recordViewModel)
+        public IActionResult Create(ToDoList list)
         {
             if (CurrentUser.Id != null)
             {
-                Record record = new Record(recordViewModel);
                 if (ModelState.IsValid)
                 {
-                    bool result = await _repository.AddRecord(record);
+                    list.UserId = CurrentUser.Id.Value;
+                    int? result = _toDoListRepository.AddToDoList(list);
 
-                    if (result)
+                    if (result != null)
                     {
-                        TempData["Success"] = "The task has been added!";
+                        TempData["Success"] = "The list has been added!";
                     }
                     else
                     {
-                        TempData["Error"] = "Something went wrong while adding the task.";
+                        TempData["Error"] = "Something went wrong while Editting list.";
                     }
 
-                    return RedirectToAction("Index", "List", new
-                    {
-                        id = record.toDoListID,
-                        hideCompleted = recordViewModel.hideCompletedAfter,
-                        showDueToday = recordViewModel.showDueTodayAfter
-                    });
+                    return RedirectToAction("Index");
                 }
 
-                return View(recordViewModel);
+                return View(list);
             }
             return NotFound();
         }
 
-        public IActionResult CreateNotification(int recordId, bool hideCompletedAfter, bool showDueTodayAfter)
+        public async Task<ActionResult> Copy(int id)
         {
             if (CurrentUser.Id != null)
             {
-                Record record = _repository.GetRecord(recordId);
-                NotificationViewModel notificationViewModel = new NotificationViewModel
+                ToDoList listToCopy = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+                if (listToCopy == null)
                 {
-                    Id = 0,
-                    toDoListId = record.toDoListID,
-                    recordId = record.Id,
-                    recordDescription = record.Description,
-                    recordTitle = record.Title,
-                    DueDate = record.DueDate,
-                    IsRead = false
-                };
+                    return NotFound();
+                }
 
-                ViewData["hideCompletedAfter"] = hideCompletedAfter;
-                ViewData["showDueTodayAfter"] = showDueTodayAfter;
-
-                return View(notificationViewModel);
+                return View(listToCopy);
             }
-            //return RedirectToAction("NoUser", "Home");
             return NotFound();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateNotification(NotificationViewModel notificationViewModel)
+        public IActionResult Copy(ToDoList list)
         {
             if (CurrentUser.Id != null)
             {
                 if (ModelState.IsValid)
                 {
-                    Notification notification = new Notification(notificationViewModel);
-                    bool result = _notificationRepository.Create(notification);
+                    ToDoList toDoListCopy = new ToDoList { Id = 0, UserId = list.UserId, Name = list.Name, Description = list.Description };
 
-                    if (result)
+                    int? result = _toDoListRepository.AddToDoList(toDoListCopy);
+
+                    if (result != null)
                     {
-                        TempData["Success"] = "The reminder has been added!";
+                        TempData["Success"] = "The list has been copied!";
+                        _toDoListRepository.CopyList(list.Id, result.Value);
                     }
                     else
                     {
-                        TempData["Error"] = "Something went wrong while adding the reminder.";
+                        TempData["Error"] = "Something went wrong while Copying list.";
                     }
 
-                    return RedirectToAction("Index", "List", new
-                    {
-                        id = notificationViewModel.toDoListId,
-                        hideCompleted = notificationViewModel.hideCompletedAfter,
-                        showDueToday = notificationViewModel.showDueTodayAfter
-                    });
+                    return RedirectToAction("Index");
                 }
 
-                return View(notificationViewModel);
+                return View(list);
             }
             return NotFound();
         }
 
-        public async Task<ActionResult> ViewFull(int id, bool hideCompletedAfter, bool showDueTodayAfter)
+        //Get /home/edit/{id}
+        public async Task<ActionResult> Edit(int id)
         {
             if (CurrentUser.Id != null)
             {
-                Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
-
-                if (record == null)
+                ToDoList list = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+                if (list == null)
                 {
                     return NotFound();
                 }
 
-                ViewData["ListName"] = record.toDoList;
-                ViewData["hideCompletedAfter"] = hideCompletedAfter;
-                ViewData["showDueTodayAfter"] = showDueTodayAfter;
-
-                return View(record);
+                return View(list);
             }
-            //return RedirectToAction("NoUser", "Home");
-            return NotFound();
-        }
-
-        public async Task<ActionResult> EditRecord(int id, bool hideCompletedAfter, bool showDueTodayAfter)
-        {
-            if (CurrentUser.Id != null)
-            {
-                Record record = await _repository.records.FirstOrDefaultAsync(x => x.Id == id);
-
-                RecordViewModel recordViewModel = new RecordViewModel(record, hideCompletedAfter, showDueTodayAfter);
-
-                if (record == null)
-                {
-                    return NotFound();
-                }
-
-                ViewData["ListName"] = record.toDoList;
-
-                return View(recordViewModel);
-            }
-            //return RedirectToAction("NoUser", "Home");
-            return NotFound();
+            return View("NoUser");
         }
 
         //Post home/edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditRecord(RecordViewModel recordViewModel)
+        public async Task<ActionResult> Edit(ToDoList list)
         {
             if (CurrentUser.Id != null)
             {
-                Record record = new Record(recordViewModel);
-
                 if (ModelState.IsValid)
                 {
-                    bool result = await _repository.UpdateRecord(record);
+                    bool result = await _toDoListRepository.UpdateList(list);
 
                     if (result)
                     {
-                        TempData["Success"] = "The task has been updated!";
+                        TempData["Success"] = "The list has been updated!";
                     }
                     else
                     {
-                        TempData["Error"] = "Something went wrong while updating the task.";
+                        TempData["Error"] = "Something went wrong while Editting list.";
                     }
 
-                    return RedirectToAction("Index", "List", new
-                    {
-                        id = record.toDoListID,
-                        hideCompleted = recordViewModel.hideCompletedAfter,
-                        showDueToday = recordViewModel.showDueTodayAfter
-                    });
+                    return RedirectToAction("Index");
                 }
 
-                return View(recordViewModel);
+                return View(list);
             }
             return NotFound();
         }
 
-        public async Task<ActionResult> DeleteRecord(int id, bool hideCompletedAfter, bool showDueTodayAfter)
-		{
+        public async Task<ActionResult> DeleteList(int id)
+        {
             if (CurrentUser.Id != null)
             {
-                int toDoListId = _repository.GetRecord(id).toDoListID;
                 if (ModelState.IsValid)
                 {
-                    _notificationRepository.DeleteNotificationsForRecord(id);
-                    bool result = await _repository.DeleteRecord(id);
+                    ToDoList list = await _toDoListRepository.toDoLists.FirstOrDefaultAsync(x => x.Id == id);
+                    if (list == null)
+                    {
+                        return NotFound();
+                    }
+
+                    _notificationRepository.DeleteNotificationsForList(id);
+                    bool result = await _toDoListRepository.DeleteList(id);
 
                     if (result)
                     {
-                        TempData["Success"] = "The task was successfully deleted!";
+                        TempData["Success"] = "The list has been deleted!";
                     }
                     else
                     {
-                        TempData["Error"] = "Something went wrong while deleting the task.";
+                        TempData["Error"] = "Something went wrong while deleting the list.";
                     }
                 }
 
-                return RedirectToAction("Index", "List", new
-                {
-                    id = toDoListId,
-                    hideCompleted = hideCompletedAfter,
-                    showDueToday = showDueTodayAfter,
-                });
+                return RedirectToAction("Index");
             }
-            //return RedirectToAction("NoUser", "Home");
-            return NotFound();
+            return View("NoUser");
+        }
+
+        public IActionResult NoUser()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

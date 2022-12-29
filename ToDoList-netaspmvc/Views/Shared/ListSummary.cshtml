@@ -14,7 +14,7 @@
         console.log(clickId)
 
         var btn = $(this).find('#modalDeleteButton');
-        btn.attr('formaction', '/Home/DeleteList/' + this.clickId);
+        btn.attr('formaction', '/List/DeleteList/' + this.clickId);
     });
 
     function getId(clicked_id) {
@@ -42,17 +42,17 @@
     <div>
         <span class="card-text p-1">
             <span style="vertical-align:middle">@Model.Description</span>
-            <a asp-controller="List" asp-action="Index" asp-route-id="@Model.Id" class="buttonView" style="float:right">
+            <a asp-controller="Task" asp-action="Index" asp-route-id="@Model.Id" class="buttonView" style="float:right">
                 View
             </a>
-            <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="buttonEdit" style="float:right">
+            <a asp-controller="List" asp-action="Edit" asp-route-id="@Model.Id" class="buttonEdit" style="float:right">
                 Edit
             </a>
             <a class="buttonDelete buttonDeleteToModal" onclick="getId(@Model.Id)" data-id="@Model.Id" data-toggle="modal" data-target="@modalIdWithPrefix" style="float:right; color: #FFFFFF">
                 Delete
             </a>
             
-            <a asp-controller="Home" asp-action="Copy" asp-route-id="@Model.Id" class="buttonBack" style="float:right">
+            <a asp-controller="List" asp-action="Copy" asp-route-id="@Model.Id" class="buttonBack" style="float:right">
                 Copy
             </a>
             
@@ -72,7 +72,7 @@
                     </div>
                     <div class="modal-footer">
                         <a class="button" data-dismiss="modal" style="color: #FFFFFF">Close</a>
-                        <a id="modalDeleteButton" asp-controller="Home" asp-action="DeleteList" asp-route-id="@Model.Id" class="buttonDelete" style="float:right">
+                        <a id="modalDeleteButton" asp-controller="List" asp-action="DeleteList" asp-route-id="@Model.Id" class="buttonDelete" style="float:right">
                             Delete
                         </a>
                     </div>

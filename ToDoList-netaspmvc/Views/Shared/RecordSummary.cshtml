@@ -17,7 +17,7 @@
         console.log(clickId)
 
         var btn = $(this).find('#modalDeleteButton');
-        btn.attr('formaction', '/List/DeleteRecord/' + this.clickId);
+        btn.attr('formaction', '/Task/DeleteRecord/' + this.clickId);
     });
 
     function getId(clicked_id) {
@@ -65,16 +65,16 @@
                 }
             }
 
-            <a asp-controller="List" asp-action="ViewFull" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonView" style="float:right">
+            <a asp-controller="Task" asp-action="ViewFull" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonView" style="float:right">
                 Full View
             </a>
-            <a asp-controller="List" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonEdit" style="float:right">
+            <a asp-controller="Task" asp-action="EditRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonEdit" style="float:right">
                 Edit
             </a>
             <a class="buttonDelete buttonDeleteToModal" onclick="getId(@Model.Id)" data-id="@Model.Id" data-toggle="modal" data-target="@modalIdWithPrefix" style="float:right; color: #FFFFFF">
                 Delete
             </a>
-            <a asp-controller="List" asp-action="CreateNotification" asp-route-recordId="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonBack" style="float:right">
+            <a asp-controller="Task" asp-action="CreateNotification" asp-route-recordId="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonBack" style="float:right">
                 Create reminder
             </a>
         </span>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <a class="button" data-dismiss="modal" style="color: #FFFFFF">Close</a>
-                        <a asp-controller="List" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonDelete">
+                        <a asp-controller="Task" asp-action="DeleteRecord" asp-route-id="@Model.Id" asp-route-hideCompletedAfter="@hideCompleted" asp-route-showDueTodayAfter="@showDueToday" class="buttonDelete">
                             Delete
                         </a>
                     </div>

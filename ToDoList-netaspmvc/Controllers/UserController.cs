@@ -69,7 +69,7 @@ namespace ToDoList_netaspmvc.Controllers
                 {
                     TempData["Success"] = "Logged in.";
                     CurrentUser.Login(UserId.Value, loginViewModel.Username);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "List");
                 }
             }
 

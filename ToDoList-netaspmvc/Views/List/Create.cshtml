@@ -1,68 +1,20 @@
-﻿@model ToDoList_DomainModel.ViewModels.RecordViewModel
+﻿@model ToDoList_DomainModel.Models.ToDoList
 
-@{
-    int toDoListID;
-    bool hideCompletedAfter;
-    bool showDueTodayAfter;
-    if (Model == null)
-    {
-        toDoListID = (int)ViewData["ListIDCreate"];
-        hideCompletedAfter = (bool)ViewData["hideCompletedAfter"];
-        showDueTodayAfter = (bool)ViewData["showDueTodayAfter"];
-    }
-    else
-    {
-        toDoListID = Model.toDoListID;
-        hideCompletedAfter = Model.hideCompletedAfter;
-        showDueTodayAfter = Model.showDueTodayAfter;
-    }
-}
-
-<h1>Insert</h1>
-
-<h4>a Task</h4>
+<h1>Create</h1>
+<h4>a List</h4>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="toDoListID" value="@toDoListID" />
-            <input type="hidden" asp-for="toDoList" value="@ViewData["ListName"]" />
-            <input type="hidden" asp-for="Id" value="0" />
-            <input type="hidden" asp-for="hideCompletedAfter" value="@hideCompletedAfter" />
-            <input type="hidden" asp-for="showDueTodayAfter" value="@showDueTodayAfter" />
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DueDate" class="control-label">Due Date</label>
-                <input asp-for="DueDate" class="form-control" type="date" />
-                <span asp-validation-for="DueDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control">
-                    <option>Not started</option>
-                    <option>Ongoing</option>
-                    <option>Completed</option>
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <a class="buttonBack" data-toggle="collapse" href="#notesArea" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Notes
-                </a>
-            </div>
-            <div class="form-group collapse" id="notesArea">
-                <label asp-for="Notes" class="control-label">Notes</label>
-                <textarea asp-for="Notes" class="form-control" rows="10"></textarea>
-                <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button type="submit" value="Create" class="buttonb">Create</button>
@@ -72,6 +24,6 @@
 </div>
 
 <div>
-    <a class="buttonEdit" asp-action="Index" asp-route-id="@toDoListID" asp-route-hideCompleted="@hideCompletedAfter" asp-route-showDueTodayAfter="@showDueTodayAfter">Back to List</a>
+    <a class="buttonEdit" asp-action="Index">Back to Home</a>
 </div>
 
