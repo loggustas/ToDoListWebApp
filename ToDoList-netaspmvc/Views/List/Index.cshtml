@@ -34,7 +34,7 @@
     @{
         if ((isListEmpty || Model == null) && listExists)
         {
-                <h2>There are currently no records in a list. You can add them by clicking one of the buttons below.</h2>
+                <h2>There are currently no tasks in the list. You can add them by clicking one of the buttons below.</h2>
         }
     }
     @{
@@ -44,30 +44,30 @@
             @{
                 if(isListEmpty)
                 {
-                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new task to a list</a>
                 }
                 else if (!isListEmpty && !hideCompleted && !showDueToday)
                 {
-                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@false">Add new task to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@false">Hide completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@true">Show due today</a>
                 }
                 else if (!isListEmpty && hideCompleted && showDueToday)
                 {
-                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true" asp-route-showDueTodayAfter="@true">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true" asp-route-showDueTodayAfter="@true">Add new task to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@true">Include completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@false">Show due all</a>
 
                 }
                 else if (!isListEmpty && !hideCompleted && showDueToday)
                 {
-                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@true">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@false" asp-route-showDueTodayAfter="@true">Add new task to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@true">Hide completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@false">Show due all</a>
                 }
                 else if (!isListEmpty && hideCompleted && !showDueToday)
                 {
-                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true" asp-route-showDueTodayAfter="@false">Add new record to a list</a>
+                    <a class="button" asp-controller="List" asp-action="Create" asp-route-id="@id" asp-route-hideCompletedAfter="@true" asp-route-showDueTodayAfter="@false">Add new task to a list</a>
                     <a class="buttonDelete" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@false" asp-route-showDueToday="@false">Include completed</a>
                     <a class="buttonEdit" asp-controller="List" asp-action="Index" asp-route-id="@id" asp-route-hideCompleted="@true" asp-route-showDueToday="@true">Show due today</a>
                 }
