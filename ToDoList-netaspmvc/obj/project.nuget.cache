@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jnxWeJ3+xtDuOp+pbJM0mo+NbCoeuRnx/P6sPkNq0uSxWmIG7D3PClhJQ2kkSNUUEAbg8MQ5lnTOLWPKGqfjRg==",
+  "dgSpecHash": "PE2Y9RLk3aUQOgnj2BD/7NQYHoxeLlvVLKlX3aT5axN6341KgB9gU8oBDqm7XdXYTmyyDnsI4GWZx7L9l0AObQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Gustas\\source\\repos\\aspnet-core-final-project\\ToDoList-netaspmvc\\ToDoList-netaspmvc.csproj",
+  "projectFilePath": "C:\\Users\\Gustas\\Desktop\\TODO_List_Web_App\\ToDoList-netaspmvc\\ToDoList-netaspmvc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Gustas\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Gustas\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
